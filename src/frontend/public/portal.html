@@ -66,10 +66,11 @@ body{
   display:flex;align-items:center;gap:12px;
   text-decoration:none;
 }
-.nav-logo img{
-  height:38px;
-  width:auto;
-  object-fit:contain;
+.nav-logo-text{
+  font-size:1.15rem;font-weight:800;
+  background:linear-gradient(135deg,var(--brand-blue),var(--brand-teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:-0.02em;
 }
 .nav-links{display:flex;align-items:center;gap:28px;}
 .nav-links a{
@@ -295,7 +296,7 @@ body{
 .footer-main{display:grid;grid-template-columns:2.2fr 2fr;gap:64px;margin-bottom:52px;align-items:start;}
 /* Brand column */
 .footer-brand{}
-.footer-logo img{height:52px;width:auto;margin-bottom:18px;border-radius:8px;padding:6px 10px;background:rgba(255,255,255,0.92);}
+.footer-logo-text{font-size:1.45rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:18px;display:block;}
 .footer-brand-desc{color:rgba(255,255,255,0.38);font-size:.86rem;line-height:1.8;max-width:280px;margin-bottom:24px;}
 .footer-social{display:flex;gap:10px;}
 .footer-social-link{
@@ -541,7 +542,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
   box-shadow:var(--shadow-lg);
 }
 .login-logo{text-align:center;margin-bottom:28px;}
-.login-logo img{height:44px;width:auto;object-fit:contain;margin-bottom:16px;}
+.login-logo-text{font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,var(--brand-blue),var(--brand-teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em;display:inline-block;}
 .login-title{font-size:1.5rem;font-weight:700;margin-bottom:4px;color:var(--text);}
 .login-sub{color:var(--muted);font-size:.88rem;}
 .pwd-wrap{position:relative;}
@@ -576,7 +577,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
   box-shadow:var(--shadow-sm);
 }
 .admin-logo{display:flex;align-items:center;gap:12px;}
-.admin-logo img{height:32px;width:auto;}
+.admin-logo-brand{font-size:1rem;font-weight:800;background:linear-gradient(135deg,var(--brand-blue),var(--brand-teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em;}
 .admin-logo-title{font-weight:700;font-size:.95rem;color:var(--text);}
 .admin-header-actions{display:flex;align-items:center;gap:14px;}
 .admin-nav-tabs{display:flex;gap:4px;}
@@ -759,7 +760,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:20px;
 }
-.loading-logo img{height:48px;width:auto;}
+.loading-logo-text{font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--brand-blue),var(--brand-teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em;}
 .loading-bar{width:180px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
 .loading-bar-inner{height:100%;background:linear-gradient(90deg,var(--brand-blue),var(--brand-teal));animation:loadBar 1.4s ease-in-out;}
 @keyframes loadBar{from{width:0;}to{width:100%;}}
@@ -991,7 +992,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
 
 <!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
-  <div class="loading-logo"><img src="/assets/uploads/IMG-20260314-WA0060-1.jpg" alt="Zentrix Solutions" /></div>
+  <div class="loading-logo"><img src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:56px;width:auto;" /></div>
   <div class="loading-bar"><div class="loading-bar-inner"></div></div>
 </div>
 
@@ -1069,7 +1070,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
 <!-- NAV -->
 <nav class="nav" id="mainNav">
   <a class="nav-logo" href="#" onclick="showPage('career');return false;">
-    <img src="/assets/uploads/IMG-20260314-WA0060-1.jpg" alt="Zentrix Solutions" />
+    <img src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:38px;width:auto;" />
   </a>
   <div class="nav-links">
     <a href="#" onclick="scrollToSection('about');return false;">About</a>
@@ -1251,7 +1252,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
       <div class="footer-main">
         <div class="footer-brand">
           <div class="footer-logo">
-            <img src="/assets/uploads/IMG-20260314-WA0060-1.jpg" alt="Zentrix Solutions" />
+            <img src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:48px;width:auto;filter:brightness(0) invert(1);" />
           </div>
           <p class="footer-brand-desc">Building next-generation technology solutions with passionate innovators from around the world.</p>
           <div class="footer-social">
@@ -1538,7 +1539,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
   <div class="admin-login-page">
     <div class="login-card" id="loginCard">
       <div class="login-logo">
-        <img src="/assets/uploads/IMG-20260314-WA0060-1.jpg" alt="Zentrix Solutions" />
+        <img src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:52px;width:auto;" />
         <div class="login-title">Admin Portal</div>
         <div class="login-sub">Zentrix Solutions &mdash; Secure Access</div>
       </div>
@@ -1563,8 +1564,8 @@ textarea.form-control{resize:vertical;min-height:100px;}
 <div class="page" id="page-admin">
   <div class="admin-header">
     <div class="admin-logo">
-      <img src="/assets/uploads/IMG-20260314-WA0060-1.jpg" alt="Zentrix Solutions" />
-      <span class="admin-logo-title">Admin Panel</span>
+      <img src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:32px;width:auto;" />
+      <span class="admin-logo-title">| Admin Panel</span>
     </div>
     <div class="admin-nav-tabs">
       <button class="admin-tab active" id="tab-applications" onclick="switchAdminTab('applications')">Applications</button>

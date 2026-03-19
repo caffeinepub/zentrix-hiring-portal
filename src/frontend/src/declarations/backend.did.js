@@ -8,10 +8,354 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const idlService = IDL.Service({});
+export const _CaffeineStorageCreateCertificateResult = IDL.Record({
+  'method' : IDL.Text,
+  'blob_hash' : IDL.Text,
+});
+export const _CaffeineStorageRefillInformation = IDL.Record({
+  'proposed_top_up_amount' : IDL.Opt(IDL.Nat),
+});
+export const _CaffeineStorageRefillResult = IDL.Record({
+  'success' : IDL.Opt(IDL.Bool),
+  'topped_up_amount' : IDL.Opt(IDL.Nat),
+});
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
+export const ApplicationStatus = IDL.Variant({
+  'reviewing' : IDL.Null,
+  'hired' : IDL.Null,
+  'pending' : IDL.Null,
+  'rejected' : IDL.Null,
+  'shortlisted' : IDL.Null,
+});
+export const SalaryRange = IDL.Record({
+  'max' : IDL.Nat,
+  'min' : IDL.Nat,
+  'currency' : IDL.Text,
+});
+export const JobPostingInput = IDL.Record({
+  'id' : IDL.Text,
+  'title' : IDL.Text,
+  'salary' : SalaryRange,
+  'jobType' : IDL.Variant({
+    'contract' : IDL.Null,
+    'partTime' : IDL.Null,
+    'fullTime' : IDL.Null,
+  }),
+  'description' : IDL.Text,
+  'isActive' : IDL.Bool,
+  'department' : IDL.Text,
+  'requirements' : IDL.Text,
+  'location' : IDL.Text,
+});
+export const Time = IDL.Int;
+export const JobPosting = IDL.Record({
+  'id' : IDL.Text,
+  'title' : IDL.Text,
+  'salary' : SalaryRange,
+  'jobType' : IDL.Variant({
+    'contract' : IDL.Null,
+    'partTime' : IDL.Null,
+    'fullTime' : IDL.Null,
+  }),
+  'createdAt' : Time,
+  'description' : IDL.Text,
+  'isActive' : IDL.Bool,
+  'department' : IDL.Text,
+  'requirements' : IDL.Text,
+  'location' : IDL.Text,
+});
+export const JobApplication = IDL.Record({
+  'status' : ApplicationStatus,
+  'appliedAt' : Time,
+  'applicantName' : IDL.Text,
+  'selfieFileId' : IDL.Text,
+  'bankPassbookFileId' : IDL.Text,
+  'trackingId' : IDL.Text,
+  'coverLetter' : IDL.Text,
+  'resumeFileId' : IDL.Text,
+  'additionalFileIds' : IDL.Vec(IDL.Text),
+  'email' : IDL.Text,
+  'experience' : IDL.Text,
+  'updatedAt' : Time,
+  'panFileId' : IDL.Text,
+  'aadhaarFileId' : IDL.Text,
+  'phone' : IDL.Text,
+  'position' : IDL.Text,
+  'adminNotes' : IDL.Text,
+});
+export const UserProfile = IDL.Record({ 'name' : IDL.Text });
+export const DashboardStats = IDL.Record({
+  'pendingCount' : IDL.Nat,
+  'hiredCount' : IDL.Nat,
+  'shortlistedCount' : IDL.Nat,
+  'totalActiveJobs' : IDL.Nat,
+  'totalApplications' : IDL.Nat,
+});
+export const ExternalBlob = IDL.Vec(IDL.Nat8);
+export const BlobFileRef = IDL.Record({
+  'blob' : ExternalBlob,
+  'fileType' : IDL.Text,
+  'fileId' : IDL.Text,
+  'uploadedAt' : Time,
+});
+export const JobApplicationInput = IDL.Record({
+  'applicantName' : IDL.Text,
+  'selfieFileId' : IDL.Text,
+  'bankPassbookFileId' : IDL.Text,
+  'coverLetter' : IDL.Text,
+  'resumeFileId' : IDL.Text,
+  'additionalFileIds' : IDL.Vec(IDL.Text),
+  'email' : IDL.Text,
+  'experience' : IDL.Text,
+  'panFileId' : IDL.Text,
+  'aadhaarFileId' : IDL.Text,
+  'phone' : IDL.Text,
+  'position' : IDL.Text,
+});
+
+export const idlService = IDL.Service({
+  '_caffeineStorageBlobIsLive' : IDL.Func(
+      [IDL.Vec(IDL.Nat8)],
+      [IDL.Bool],
+      ['query'],
+    ),
+  '_caffeineStorageBlobsToDelete' : IDL.Func(
+      [],
+      [IDL.Vec(IDL.Vec(IDL.Nat8))],
+      ['query'],
+    ),
+  '_caffeineStorageConfirmBlobDeletion' : IDL.Func(
+      [IDL.Vec(IDL.Vec(IDL.Nat8))],
+      [],
+      [],
+    ),
+  '_caffeineStorageCreateCertificate' : IDL.Func(
+      [IDL.Text],
+      [_CaffeineStorageCreateCertificateResult],
+      [],
+    ),
+  '_caffeineStorageRefillCashier' : IDL.Func(
+      [IDL.Opt(_CaffeineStorageRefillInformation)],
+      [_CaffeineStorageRefillResult],
+      [],
+    ),
+  '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'bulkUpdateStatus' : IDL.Func([IDL.Vec(IDL.Text), ApplicationStatus], [], []),
+  'createJobPost' : IDL.Func([JobPostingInput], [IDL.Text], []),
+  'deleteApplication' : IDL.Func([IDL.Text], [], []),
+  'deleteJobPost' : IDL.Func([IDL.Text], [], []),
+  'getActiveJobs' : IDL.Func([], [IDL.Vec(JobPosting)], ['query']),
+  'getApplicationByTrackingId' : IDL.Func(
+      [IDL.Text],
+      [JobApplication],
+      ['query'],
+    ),
+  'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getDashboardStats' : IDL.Func([], [DashboardStats], ['query']),
+  'getFile' : IDL.Func([IDL.Text], [BlobFileRef], ['query']),
+  'getJobPost' : IDL.Func([IDL.Text], [JobPosting], ['query']),
+  'getUserProfile' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Opt(UserProfile)],
+      ['query'],
+    ),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'listAllApplications' : IDL.Func([], [IDL.Vec(JobApplication)], ['query']),
+  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'submitApplication' : IDL.Func([JobApplicationInput], [JobApplication], []),
+  'updateApplicationStatus' : IDL.Func(
+      [IDL.Text, ApplicationStatus, IDL.Text],
+      [],
+      [],
+    ),
+  'updateJobPost' : IDL.Func([IDL.Text, JobPostingInput], [], []),
+  'uploadFile' : IDL.Func([IDL.Text, ExternalBlob, IDL.Text], [], []),
+});
 
 export const idlInitArgs = [];
 
-export const idlFactory = ({ IDL }) => { return IDL.Service({}); };
+export const idlFactory = ({ IDL }) => {
+  const _CaffeineStorageCreateCertificateResult = IDL.Record({
+    'method' : IDL.Text,
+    'blob_hash' : IDL.Text,
+  });
+  const _CaffeineStorageRefillInformation = IDL.Record({
+    'proposed_top_up_amount' : IDL.Opt(IDL.Nat),
+  });
+  const _CaffeineStorageRefillResult = IDL.Record({
+    'success' : IDL.Opt(IDL.Bool),
+    'topped_up_amount' : IDL.Opt(IDL.Nat),
+  });
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
+  const ApplicationStatus = IDL.Variant({
+    'reviewing' : IDL.Null,
+    'hired' : IDL.Null,
+    'pending' : IDL.Null,
+    'rejected' : IDL.Null,
+    'shortlisted' : IDL.Null,
+  });
+  const SalaryRange = IDL.Record({
+    'max' : IDL.Nat,
+    'min' : IDL.Nat,
+    'currency' : IDL.Text,
+  });
+  const JobPostingInput = IDL.Record({
+    'id' : IDL.Text,
+    'title' : IDL.Text,
+    'salary' : SalaryRange,
+    'jobType' : IDL.Variant({
+      'contract' : IDL.Null,
+      'partTime' : IDL.Null,
+      'fullTime' : IDL.Null,
+    }),
+    'description' : IDL.Text,
+    'isActive' : IDL.Bool,
+    'department' : IDL.Text,
+    'requirements' : IDL.Text,
+    'location' : IDL.Text,
+  });
+  const Time = IDL.Int;
+  const JobPosting = IDL.Record({
+    'id' : IDL.Text,
+    'title' : IDL.Text,
+    'salary' : SalaryRange,
+    'jobType' : IDL.Variant({
+      'contract' : IDL.Null,
+      'partTime' : IDL.Null,
+      'fullTime' : IDL.Null,
+    }),
+    'createdAt' : Time,
+    'description' : IDL.Text,
+    'isActive' : IDL.Bool,
+    'department' : IDL.Text,
+    'requirements' : IDL.Text,
+    'location' : IDL.Text,
+  });
+  const JobApplication = IDL.Record({
+    'status' : ApplicationStatus,
+    'appliedAt' : Time,
+    'applicantName' : IDL.Text,
+    'selfieFileId' : IDL.Text,
+    'bankPassbookFileId' : IDL.Text,
+    'trackingId' : IDL.Text,
+    'coverLetter' : IDL.Text,
+    'resumeFileId' : IDL.Text,
+    'additionalFileIds' : IDL.Vec(IDL.Text),
+    'email' : IDL.Text,
+    'experience' : IDL.Text,
+    'updatedAt' : Time,
+    'panFileId' : IDL.Text,
+    'aadhaarFileId' : IDL.Text,
+    'phone' : IDL.Text,
+    'position' : IDL.Text,
+    'adminNotes' : IDL.Text,
+  });
+  const UserProfile = IDL.Record({ 'name' : IDL.Text });
+  const DashboardStats = IDL.Record({
+    'pendingCount' : IDL.Nat,
+    'hiredCount' : IDL.Nat,
+    'shortlistedCount' : IDL.Nat,
+    'totalActiveJobs' : IDL.Nat,
+    'totalApplications' : IDL.Nat,
+  });
+  const ExternalBlob = IDL.Vec(IDL.Nat8);
+  const BlobFileRef = IDL.Record({
+    'blob' : ExternalBlob,
+    'fileType' : IDL.Text,
+    'fileId' : IDL.Text,
+    'uploadedAt' : Time,
+  });
+  const JobApplicationInput = IDL.Record({
+    'applicantName' : IDL.Text,
+    'selfieFileId' : IDL.Text,
+    'bankPassbookFileId' : IDL.Text,
+    'coverLetter' : IDL.Text,
+    'resumeFileId' : IDL.Text,
+    'additionalFileIds' : IDL.Vec(IDL.Text),
+    'email' : IDL.Text,
+    'experience' : IDL.Text,
+    'panFileId' : IDL.Text,
+    'aadhaarFileId' : IDL.Text,
+    'phone' : IDL.Text,
+    'position' : IDL.Text,
+  });
+  
+  return IDL.Service({
+    '_caffeineStorageBlobIsLive' : IDL.Func(
+        [IDL.Vec(IDL.Nat8)],
+        [IDL.Bool],
+        ['query'],
+      ),
+    '_caffeineStorageBlobsToDelete' : IDL.Func(
+        [],
+        [IDL.Vec(IDL.Vec(IDL.Nat8))],
+        ['query'],
+      ),
+    '_caffeineStorageConfirmBlobDeletion' : IDL.Func(
+        [IDL.Vec(IDL.Vec(IDL.Nat8))],
+        [],
+        [],
+      ),
+    '_caffeineStorageCreateCertificate' : IDL.Func(
+        [IDL.Text],
+        [_CaffeineStorageCreateCertificateResult],
+        [],
+      ),
+    '_caffeineStorageRefillCashier' : IDL.Func(
+        [IDL.Opt(_CaffeineStorageRefillInformation)],
+        [_CaffeineStorageRefillResult],
+        [],
+      ),
+    '_caffeineStorageUpdateGatewayPrincipals' : IDL.Func([], [], []),
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'bulkUpdateStatus' : IDL.Func(
+        [IDL.Vec(IDL.Text), ApplicationStatus],
+        [],
+        [],
+      ),
+    'createJobPost' : IDL.Func([JobPostingInput], [IDL.Text], []),
+    'deleteApplication' : IDL.Func([IDL.Text], [], []),
+    'deleteJobPost' : IDL.Func([IDL.Text], [], []),
+    'getActiveJobs' : IDL.Func([], [IDL.Vec(JobPosting)], ['query']),
+    'getApplicationByTrackingId' : IDL.Func(
+        [IDL.Text],
+        [JobApplication],
+        ['query'],
+      ),
+    'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getDashboardStats' : IDL.Func([], [DashboardStats], ['query']),
+    'getFile' : IDL.Func([IDL.Text], [BlobFileRef], ['query']),
+    'getJobPost' : IDL.Func([IDL.Text], [JobPosting], ['query']),
+    'getUserProfile' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Opt(UserProfile)],
+        ['query'],
+      ),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'listAllApplications' : IDL.Func([], [IDL.Vec(JobApplication)], ['query']),
+    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'submitApplication' : IDL.Func([JobApplicationInput], [JobApplication], []),
+    'updateApplicationStatus' : IDL.Func(
+        [IDL.Text, ApplicationStatus, IDL.Text],
+        [],
+        [],
+      ),
+    'updateJobPost' : IDL.Func([IDL.Text, JobPostingInput], [], []),
+    'uploadFile' : IDL.Func([IDL.Text, ExternalBlob, IDL.Text], [], []),
+  });
+};
 
 export const init = ({ IDL }) => { return []; };

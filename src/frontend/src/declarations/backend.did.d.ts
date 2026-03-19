@@ -10,7 +10,150 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export interface _SERVICE {}
+export type ApplicationStatus = { 'reviewing' : null } |
+  { 'hired' : null } |
+  { 'pending' : null } |
+  { 'rejected' : null } |
+  { 'shortlisted' : null };
+export interface BlobFileRef {
+  'blob' : ExternalBlob,
+  'fileType' : string,
+  'fileId' : string,
+  'uploadedAt' : Time,
+}
+export interface DashboardStats {
+  'pendingCount' : bigint,
+  'hiredCount' : bigint,
+  'shortlistedCount' : bigint,
+  'totalActiveJobs' : bigint,
+  'totalApplications' : bigint,
+}
+export type ExternalBlob = Uint8Array;
+export interface JobApplication {
+  'status' : ApplicationStatus,
+  'appliedAt' : Time,
+  'applicantName' : string,
+  'selfieFileId' : string,
+  'bankPassbookFileId' : string,
+  'trackingId' : string,
+  'coverLetter' : string,
+  'resumeFileId' : string,
+  'additionalFileIds' : Array<string>,
+  'email' : string,
+  'experience' : string,
+  'updatedAt' : Time,
+  'panFileId' : string,
+  'aadhaarFileId' : string,
+  'phone' : string,
+  'position' : string,
+  'adminNotes' : string,
+}
+export interface JobApplicationInput {
+  'applicantName' : string,
+  'selfieFileId' : string,
+  'bankPassbookFileId' : string,
+  'coverLetter' : string,
+  'resumeFileId' : string,
+  'additionalFileIds' : Array<string>,
+  'email' : string,
+  'experience' : string,
+  'panFileId' : string,
+  'aadhaarFileId' : string,
+  'phone' : string,
+  'position' : string,
+}
+export interface JobPosting {
+  'id' : string,
+  'title' : string,
+  'salary' : SalaryRange,
+  'jobType' : { 'contract' : null } |
+    { 'partTime' : null } |
+    { 'fullTime' : null },
+  'createdAt' : Time,
+  'description' : string,
+  'isActive' : boolean,
+  'department' : string,
+  'requirements' : string,
+  'location' : string,
+}
+export interface JobPostingInput {
+  'id' : string,
+  'title' : string,
+  'salary' : SalaryRange,
+  'jobType' : { 'contract' : null } |
+    { 'partTime' : null } |
+    { 'fullTime' : null },
+  'description' : string,
+  'isActive' : boolean,
+  'department' : string,
+  'requirements' : string,
+  'location' : string,
+}
+export interface SalaryRange {
+  'max' : bigint,
+  'min' : bigint,
+  'currency' : string,
+}
+export type Time = bigint;
+export interface UserProfile { 'name' : string }
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
+export interface _CaffeineStorageCreateCertificateResult {
+  'method' : string,
+  'blob_hash' : string,
+}
+export interface _CaffeineStorageRefillInformation {
+  'proposed_top_up_amount' : [] | [bigint],
+}
+export interface _CaffeineStorageRefillResult {
+  'success' : [] | [boolean],
+  'topped_up_amount' : [] | [bigint],
+}
+export interface _SERVICE {
+  '_caffeineStorageBlobIsLive' : ActorMethod<[Uint8Array], boolean>,
+  '_caffeineStorageBlobsToDelete' : ActorMethod<[], Array<Uint8Array>>,
+  '_caffeineStorageConfirmBlobDeletion' : ActorMethod<
+    [Array<Uint8Array>],
+    undefined
+  >,
+  '_caffeineStorageCreateCertificate' : ActorMethod<
+    [string],
+    _CaffeineStorageCreateCertificateResult
+  >,
+  '_caffeineStorageRefillCashier' : ActorMethod<
+    [[] | [_CaffeineStorageRefillInformation]],
+    _CaffeineStorageRefillResult
+  >,
+  '_caffeineStorageUpdateGatewayPrincipals' : ActorMethod<[], undefined>,
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
+  'bulkUpdateStatus' : ActorMethod<
+    [Array<string>, ApplicationStatus],
+    undefined
+  >,
+  'createJobPost' : ActorMethod<[JobPostingInput], string>,
+  'deleteApplication' : ActorMethod<[string], undefined>,
+  'deleteJobPost' : ActorMethod<[string], undefined>,
+  'getActiveJobs' : ActorMethod<[], Array<JobPosting>>,
+  'getApplicationByTrackingId' : ActorMethod<[string], JobApplication>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getDashboardStats' : ActorMethod<[], DashboardStats>,
+  'getFile' : ActorMethod<[string], BlobFileRef>,
+  'getJobPost' : ActorMethod<[string], JobPosting>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
+  'listAllApplications' : ActorMethod<[], Array<JobApplication>>,
+  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'submitApplication' : ActorMethod<[JobApplicationInput], JobApplication>,
+  'updateApplicationStatus' : ActorMethod<
+    [string, ApplicationStatus, string],
+    undefined
+  >,
+  'updateJobPost' : ActorMethod<[string, JobPostingInput], undefined>,
+  'uploadFile' : ActorMethod<[string, ExternalBlob, string], undefined>,
+}
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];
 export declare const idlFactory: IDL.InterfaceFactory;
