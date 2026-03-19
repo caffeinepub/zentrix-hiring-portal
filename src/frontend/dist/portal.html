@@ -23,11 +23,14 @@
   --shortlisted: #7C3AED;
   --rejected: #DC2626;
   --selected: #059669;
-  --radius: 16px;
+  --radius: 18px;
   --radius-sm: 10px;
-  --shadow-sm: 0 1px 4px rgba(15,28,53,0.07);
-  --shadow: 0 4px 20px rgba(15,28,53,0.10);
-  --shadow-lg: 0 8px 40px rgba(15,28,53,0.14);
+  --shadow-sm: 0 2px 8px rgba(15,28,53,0.07);
+  --shadow: 0 6px 28px rgba(15,28,53,0.11);
+  --shadow-lg: 0 12px 50px rgba(15,28,53,0.16);
+  --shadow-xl: 0 20px 80px rgba(15,28,53,0.22);
+  --gradient-brand: linear-gradient(135deg,#1B5EBA 0%,#1E8DB0 50%,#2EA879 100%);
+  --gradient-brand-soft: linear-gradient(135deg,rgba(27,94,186,0.08),rgba(46,168,121,0.08));
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -209,44 +212,57 @@ body{
 .section{padding:70px 5%;max-width:1200px;margin:0 auto;}
 .section-header{text-align:center;margin-bottom:48px;}
 .section-tag{
-  display:inline-block;
-  color:var(--brand-blue);font-size:.8rem;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  margin-bottom:10px;
-  background:rgba(27,94,186,0.08);padding:4px 14px;border-radius:50px;
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--brand-blue);font-size:.72rem;font-weight:700;
+  letter-spacing:2.5px;text-transform:uppercase;
+  margin-bottom:14px;
+  background:linear-gradient(135deg,rgba(27,94,186,0.10),rgba(46,168,121,0.08));
+  padding:6px 16px;border-radius:50px;
+  border:1px solid rgba(27,94,186,0.18);
 }
 .section-title{
-  font-size:clamp(1.6rem,3vw,2.4rem);
-  font-weight:700;letter-spacing:-.5px;
-  margin-bottom:12px;
+  font-size:clamp(1.7rem,3vw,2.6rem);
+  font-weight:800;letter-spacing:-.8px;
+  margin-bottom:14px;
+  line-height:1.15;
 }
-.section-sub{color:var(--muted);font-size:1rem;max-width:560px;margin:0 auto;}
+.section-sub{color:var(--muted);font-size:1.02rem;max-width:580px;margin:0 auto;line-height:1.75;}
 
 /* ABOUT CARDS */
 .about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;}
 .about-card{
-  background:#fff;border:1px solid var(--border);
-  border-radius:var(--radius);padding:32px 28px;
-  transition:all .3s;cursor:default;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);padding:34px 28px;
+  transition:all .35s cubic-bezier(.22,1,.36,1);cursor:default;
   box-shadow:var(--shadow-sm);
+  position:relative;overflow:hidden;
 }
-.about-card:hover{box-shadow:var(--shadow);border-color:rgba(27,94,186,0.2);transform:translateY(-4px);}
+.about-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--gradient-brand);border-radius:var(--radius) var(--radius) 0 0;
+  opacity:0;transition:opacity .35s;
+}
+.about-card:hover{box-shadow:var(--shadow-lg);border-color:rgba(27,94,186,0.15);transform:translateY(-6px);}
+.about-card:hover::before{opacity:1;}
 .about-icon{
-  width:52px;height:52px;
+  width:56px;height:56px;
   background:linear-gradient(135deg,rgba(27,94,186,0.1),rgba(46,168,121,0.1));
   border:1px solid rgba(27,94,186,0.15);
-  border-radius:14px;display:flex;align-items:center;justify-content:center;
-  font-size:1.4rem;margin-bottom:18px;
+  border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:20px;
+  transition:transform .3s;
 }
-.about-title{font-size:1.1rem;font-weight:700;margin-bottom:10px;color:var(--text);}
-.about-desc{color:var(--muted);font-size:.9rem;line-height:1.7;}
+.about-card:hover .about-icon{transform:scale(1.1);}
+.about-title{font-size:1.12rem;font-weight:700;margin-bottom:10px;color:var(--text);}
+.about-desc{color:var(--muted);font-size:.9rem;line-height:1.75;}
 
 /* POSITIONS GRID */
 .positions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:22px;}
 .job-card{
   background:#fff;border:1px solid var(--border);
-  border-radius:var(--radius);padding:26px;
-  transition:all .3s;display:flex;flex-direction:column;
+  border-radius:var(--radius);padding:28px;
+  transition:all .35s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column;
   box-shadow:var(--shadow-sm);
 }
 .job-card:hover{box-shadow:var(--shadow);border-color:rgba(27,94,186,0.25);transform:translateY(-4px);}
@@ -272,49 +288,75 @@ body{
 }
 .job-apply-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(27,94,186,0.35);}
 
-/* CONTACT SECTION */
-.contact-section{
-  background:linear-gradient(135deg,var(--brand-blue),var(--brand-teal));
-  padding:60px 5%;
-  text-align:center;
-}
-.contact-section h2{color:#fff;font-size:1.8rem;font-weight:700;margin-bottom:8px;}
-.contact-section p{color:rgba(255,255,255,0.85);font-size:1rem;margin-bottom:32px;}
-.contact-cards{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;max-width:800px;margin:0 auto;}
-.contact-card{
-  background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);
-  border-radius:14px;padding:20px 28px;
-  color:#fff;text-decoration:none;
-  display:flex;align-items:center;gap:12px;
-  font-size:.92rem;font-weight:500;
-  transition:all .2s;
-  backdrop-filter:blur(10px);
-}
-.contact-card:hover{background:rgba(255,255,255,0.25);transform:translateY(-2px);}
-.contact-card-icon{font-size:1.3rem;}
-
 /* FOOTER */
-.footer{
-  background:var(--text);
-  border-top:1px solid rgba(255,255,255,0.05);
-  padding:50px 5% 28px;
+.footer{background:#060E1C;position:relative;overflow:hidden;}
+.footer-top-bar{height:3px;background:linear-gradient(90deg,#1B5EBA,#2EA879);opacity:.7;}
+.footer-container{max-width:1200px;margin:0 auto;padding:64px 5% 0;}
+.footer-main{display:grid;grid-template-columns:2.2fr 2fr;gap:64px;margin-bottom:52px;align-items:start;}
+/* Brand column */
+.footer-brand{}
+.footer-logo img{height:52px;width:auto;margin-bottom:18px;border-radius:8px;padding:6px 10px;background:rgba(255,255,255,0.92);}
+.footer-brand-desc{color:rgba(255,255,255,0.38);font-size:.86rem;line-height:1.8;max-width:280px;margin-bottom:24px;}
+.footer-social{display:flex;gap:10px;}
+.footer-social-link{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.6);text-decoration:none;
+  transition:all .22s;
 }
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto 40px;}
-.footer-brand p{color:rgba(255,255,255,0.55);font-size:.88rem;line-height:1.7;margin-top:12px;max-width:260px;}
-.footer-logo img{height:34px;width:auto;filter:brightness(0) invert(1);opacity:.9;}
-.footer-col h4{font-size:.9rem;font-weight:600;margin-bottom:14px;color:#fff;}
-.footer-col a{display:block;color:rgba(255,255,255,0.5);font-size:.85rem;text-decoration:none;margin-bottom:8px;transition:color .2s;}
-.footer-col a:hover{color:#fff;}
-.footer-contact-item{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.6);font-size:.85rem;margin-bottom:10px;}
-.footer-contact-item span:first-child{font-size:1rem;}
-.footer-bottom{
-  max-width:1200px;margin:0 auto;
-  border-top:1px solid rgba(255,255,255,0.08);
-  padding-top:20px;
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:12px;
+.footer-social-link:hover{background:rgba(27,94,186,0.25);border-color:rgba(27,94,186,0.45);color:#fff;transform:translateY(-2px);}
+/* Links group */
+.footer-links-group{display:grid;grid-template-columns:1fr 1fr 1.6fr;gap:32px;}
+.footer-col-title{
+  font-size:.72rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:2px;
+  margin-bottom:18px;
+  background:linear-gradient(90deg,#1B5EBA,#2EA879);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.footer-bottom p{color:rgba(255,255,255,0.35);font-size:.82rem;}
+.footer-link{
+  display:flex;align-items:center;gap:8px;
+  color:rgba(255,255,255,0.38);font-size:.84rem;
+  text-decoration:none;margin-bottom:10px;
+  transition:all .2s;
+}
+.footer-link:hover{color:rgba(255,255,255,0.85);padding-left:4px;}
+/* Contact links with colored icons */
+.footer-contact-link{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:10px;padding:10px 13px;
+  margin-bottom:8px;
+  transition:all .22s;
+}
+.footer-contact-link:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.13);color:rgba(255,255,255,0.85);padding-left:13px;}
+.fcl-icon{
+  width:22px;height:22px;flex-shrink:0;
+  border-radius:6px;display:flex;align-items:center;justify-content:center;
+}
+.fcl-phone{background:rgba(27,94,186,0.25);color:rgba(100,160,255,0.9);}
+.fcl-sales{background:rgba(46,168,121,0.25);color:rgba(70,210,155,0.9);}
+.fcl-support{background:rgba(124,58,237,0.25);color:rgba(170,120,255,0.9);}
+/* Divider + bottom */
+.footer-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);margin:0 0 28px;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-bottom:32px;}
+.footer-copy{color:rgba(255,255,255,0.22);font-size:.78rem;}
+.footer-bottom-links{display:flex;align-items:center;gap:16px;}
+.footer-bottom-links a{color:rgba(255,255,255,0.22);font-size:.78rem;text-decoration:none;transition:color .2s;}
+.footer-bottom-links a:hover{color:rgba(255,255,255,0.6);}
+.footer-sep{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,0.15);}
+/* Responsive footer */
+@media(max-width:860px){
+  .footer-main{grid-template-columns:1fr;gap:36px;}
+  .footer-links-group{grid-template-columns:1fr 1fr;gap:24px;}
+}
+@media(max-width:520px){
+  .footer-links-group{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center;}
+}
+
 
 /* FORM PAGE */
 .form-page{padding:40px 5%;max-width:820px;margin:0 auto;}
@@ -723,7 +765,6 @@ textarea.form-control{resize:vertical;min-height:100px;}
 @keyframes loadBar{from{width:0;}to{width:100%;}}
 
 @media(max-width:900px){
-  .footer-grid{grid-template-columns:1fr 1fr;}
   .stats-grid{grid-template-columns:repeat(3,1fr);}
   .hero{flex-direction:column;gap:32px;padding-top:48px;}
   .hero-visual{flex:none;width:100%;max-width:380px;}
@@ -737,9 +778,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
   .form-group.full{grid-column:1;}
   .docs-grid{grid-template-columns:1fr;}
   .detail-grid{grid-template-columns:1fr;}
-  .footer-grid{grid-template-columns:1fr;}
   .stats-grid{grid-template-columns:repeat(2,1fr);}
-  .contact-cards{flex-direction:column;align-items:center;}
   .positions-admin-grid{grid-template-columns:1fr;}
 }
 
@@ -818,16 +857,41 @@ textarea.form-control{resize:vertical;min-height:100px;}
 .faq-answer p{color:var(--muted);font-size:.88rem;line-height:1.7;}
 
 /* SOCIAL LINKS */
-.social-links{display:flex;gap:10px;margin-top:12px;}
-.social-link{width:36px;height:36px;border-radius:10px;background:rgba(27,94,186,0.08);border:1px solid rgba(27,94,186,0.15);display:flex;align-items:center;justify-content:center;font-size:1rem;text-decoration:none;transition:all .2s;}
-.social-link:hover{background:var(--brand-blue);border-color:var(--brand-blue);transform:translateY(-2px);}
+.social-links{display:flex;gap:10px;margin-top:16px;}
+.social-link{
+  width:38px;height:38px;border-radius:11px;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;text-decoration:none;transition:all .25s;
+}
+.social-link:hover{background:var(--brand-blue);border-color:var(--brand-blue);transform:translateY(-3px);box-shadow:0 6px 20px rgba(27,94,186,0.4);}
 
 /* TRUST STATS BAR */
-.trust-bar{background:linear-gradient(135deg,var(--brand-blue),var(--brand-teal));padding:28px 5%;}
-.trust-bar-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-.trust-stat{text-align:center;}
-.trust-stat-num{font-size:1.8rem;font-weight:800;color:#fff;}
-.trust-stat-label{font-size:.78rem;color:rgba(255,255,255,0.8);margin-top:2px;}
+.trust-bar{
+  background:var(--gradient-brand);
+  padding:32px 5%;
+  position:relative;overflow:hidden;
+}
+.trust-bar::before{
+  content:'';position:absolute;top:-50%;right:-5%;
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 60%);
+  pointer-events:none;
+}
+.trust-bar-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.trust-stat{
+  text-align:center;
+  padding:18px 10px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  backdrop-filter:blur(10px);
+  transition:background .2s,transform .2s;
+}
+.trust-stat:hover{background:rgba(255,255,255,0.16);transform:translateY(-2px);}
+.trust-stat-num{font-size:2rem;font-weight:800;color:#fff;letter-spacing:-1px;}
+.trust-stat-label{font-size:.78rem;color:rgba(255,255,255,0.75);margin-top:4px;text-transform:uppercase;letter-spacing:1px;}
 
 /* RESPONSE TIME NOTICE */
 .response-notice{background:rgba(46,168,121,0.07);border:1px solid rgba(46,168,121,0.2);border-radius:10px;padding:14px 18px;margin-top:20px;display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--brand-teal);}
@@ -840,12 +904,94 @@ textarea.form-control{resize:vertical;min-height:100px;}
   .success-card{padding:32px 22px;}
 }
 
+
+/* CATEGORY FILTER TABS */
+.category-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;justify-content:center;}
+.category-tab{background:#fff;border:1.5px solid var(--border);border-radius:50px;padding:9px 20px;font-size:.85rem;font-weight:500;color:var(--muted);cursor:pointer;transition:all .2s;}
+.category-tab:hover{border-color:var(--brand-blue);color:var(--brand-blue);}
+.category-tab.active{background:linear-gradient(135deg,var(--brand-blue),var(--brand-teal));border-color:transparent;color:#fff;box-shadow:0 4px 14px rgba(27,94,186,0.25);}
+.job-meta-extra{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--dim);margin:8px 0;}
+.no-jobs-state{grid-column:1/-1;text-align:center;padding:60px 20px;background:#fff;border:1.5px dashed var(--border2);border-radius:20px;}
+.no-jobs-icon{font-size:3rem;margin-bottom:16px;}
+.no-jobs-title{font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:8px;}
+.no-jobs-sub{color:var(--muted);font-size:.9rem;margin-bottom:20px;}
+.notify-row{display:flex;gap:8px;max-width:360px;margin:0 auto;}
+.notify-input{flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:.88rem;color:var(--text);outline:none;transition:border-color .2s;}
+.notify-input:focus{border-color:var(--brand-blue);}
+.notify-btn{background:linear-gradient(135deg,var(--brand-blue),var(--brand-teal));color:#fff;border:none;border-radius:10px;padding:10px 18px;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap;}
+
+/* BULK ACTIONS */
+.bulk-bar{background:linear-gradient(135deg,var(--brand-blue),var(--brand-teal));border-radius:12px;padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;box-shadow:0 4px 14px rgba(27,94,186,0.25);}
+.bulk-bar.hidden{display:none;}
+.bulk-bar-count{color:#fff;font-size:.88rem;font-weight:600;flex:1;}
+.bulk-select{border-radius:8px;border:none;padding:8px 14px;font-size:.85rem;cursor:pointer;font-weight:500;outline:none;}
+.bulk-apply-btn{background:#fff;color:var(--brand-blue);border:none;border-radius:8px;padding:9px 18px;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;}
+.bulk-apply-btn:hover{background:rgba(255,255,255,0.9);}
+.bulk-cancel-btn{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.15);border:none;border-radius:8px;padding:9px 14px;font-size:.83rem;cursor:pointer;transition:all .2s;}
+.bulk-cancel-btn:hover{background:rgba(255,255,255,0.25);color:#fff;}
+.row-check{width:16px;height:16px;cursor:pointer;accent-color:var(--brand-blue);}
+
+/* EXPORT CSV */
+.export-btn{background:#fff;border:1.5px solid var(--brand-teal);color:var(--brand-teal);border-radius:10px;padding:10px 18px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.export-btn:hover{background:var(--brand-teal);color:#fff;}
+
+/* NOTES AREA */
+.notes-area{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-size:.87rem;color:var(--text);outline:none;min-height:80px;resize:vertical;font-family:inherit;transition:border-color .2s;}
+.notes-area:focus{border-color:var(--brand-blue);box-shadow:0 0 0 3px rgba(27,94,186,0.1);}
+.notes-save-btn{background:linear-gradient(135deg,var(--brand-blue),var(--brand-teal));color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:8px;transition:all .2s;}
+.notes-save-btn:hover{opacity:.9;}
+.notes-saved-msg{color:var(--brand-teal);font-size:.78rem;margin-left:10px;display:none;}
+.notes-saved-msg.show{display:inline;}
+
+/* WHY JOIN ZENTRIX */
+.why-join-section{
+  padding:80px 5%;
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.why-join-section::before{
+  content:'';position:absolute;top:-120px;right:-120px;
+  width:450px;height:450px;
+  background:radial-gradient(circle,rgba(46,168,121,0.10) 0%,transparent 70%);
+  pointer-events:none;
+}
+.why-join-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;max-width:1200px;margin:0 auto;}
+.why-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+  padding:34px 26px;text-align:center;
+  transition:all .35s cubic-bezier(.22,1,.36,1);
+  box-shadow:var(--shadow-sm);
+  position:relative;overflow:hidden;
+}
+.why-card::after{
+  content:'';position:absolute;inset:0;
+  background:var(--gradient-brand);
+  opacity:0;transition:opacity .35s;border-radius:var(--radius);
+  z-index:0;
+}
+.why-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-6px);border-color:rgba(27,94,186,0.25);}
+.why-card:hover::after{opacity:.04;}
+.why-icon{
+  font-size:2.2rem;margin-bottom:16px;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:64px;height:64px;
+  background:linear-gradient(135deg,rgba(27,94,186,0.08),rgba(46,168,121,0.08));
+  border:1px solid rgba(27,94,186,0.12);
+  border-radius:20px;
+  transition:transform .3s;
+  position:relative;z-index:1;
+}
+.why-card:hover .why-icon{transform:scale(1.1) rotate(-4deg);}
+.why-title{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:10px;position:relative;z-index:1;}
+.why-desc{color:var(--muted);font-size:.88rem;line-height:1.7;position:relative;z-index:1;}
 </style></head>
 <body>
 
 <!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
-  <div class="loading-logo"><img src="/assets/uploads/zentrix-logo-1.jpg" alt="Zentrix Solutions" /></div>
+  <div class="loading-logo"><img src="/assets/uploads/IMG-20260314-WA0060-1.jpg" alt="Zentrix Solutions" /></div>
   <div class="loading-bar"><div class="loading-bar-inner"></div></div>
 </div>
 
@@ -856,7 +1002,13 @@ textarea.form-control{resize:vertical;min-height:100px;}
     <div class="modal-title">Application Details</div>
     <div class="modal-sub" id="detailModalId"></div>
     <div class="detail-grid" id="detailModalBody"></div>
-    <div class="modal-actions">
+    <div class="modal-section-title" style="margin-top:20px;">&#128221; Internal Notes</div>
+    <textarea class="notes-area" id="detailNotes" placeholder="Add internal notes or remarks about this applicant..."></textarea>
+    <div style="display:flex;align-items:center;">
+      <button class="notes-save-btn" onclick="saveNotes()">Save Notes</button>
+      <span class="notes-saved-msg" id="notesSavedMsg">&#10003; Saved!</span>
+    </div>
+    <div class="modal-actions" style="margin-top:16px;">
       <select class="filter-select" id="detailStatusSelect" style="padding:8px 14px;">
         <option>Pending</option>
         <option>Under Review</option>
@@ -917,7 +1069,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
 <!-- NAV -->
 <nav class="nav" id="mainNav">
   <a class="nav-logo" href="#" onclick="showPage('career');return false;">
-    <img src="/assets/uploads/zentrix-logo-1.jpg" alt="Zentrix Solutions" />
+    <img src="/assets/uploads/IMG-20260314-WA0060-1.jpg" alt="Zentrix Solutions" />
   </a>
   <div class="nav-links">
     <a href="#" onclick="scrollToSection('about');return false;">About</a>
@@ -1009,12 +1161,53 @@ textarea.form-control{resize:vertical;min-height:100px;}
     </div>
   </div>
 
+  <!-- WHY JOIN ZENTRIX -->
+  <div class="why-join-section">
+    <div class="section-header" style="max-width:1200px;margin:0 auto 40px;">
+      <div class="section-tag">Life at Zentrix</div>
+      <h2 class="section-title">Why Join Zentrix?</h2>
+      <p class="section-sub">More than a job — a place to grow, build, and thrive.</p>
+    </div>
+    <div class="why-join-grid">
+      <div class="why-card">
+        <div class="why-icon">&#127775;</div>
+        <div class="why-title">Innovation Culture</div>
+        <div class="why-desc">We encourage bold ideas and give you the freedom to experiment, fail fast, and build things that matter.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">&#128640;</div>
+        <div class="why-title">Fast Career Growth</div>
+        <div class="why-desc">Clear growth paths, quarterly reviews, mentorship from industry leaders, and a learning budget for every employee.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">&#127873;</div>
+        <div class="why-title">Great Perks</div>
+        <div class="why-desc">Competitive pay, health insurance, flexible hours, remote-friendly culture, and team retreats twice a year.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">&#9878;&#65039;</div>
+        <div class="why-title">Work-Life Balance</div>
+        <div class="why-desc">Unlimited PTO policy, mental wellness support, and a team that respects your time outside of work.</div>
+      </div>
+    </div>
+  </div>
+
   <!-- OPEN POSITIONS -->
   <div class="section" id="positions">
     <div class="section-header">
       <div class="section-tag">Join Us</div>
       <h2 class="section-title">Open Positions</h2>
       <p class="section-sub">Find your next role and make an impact with our growing team.</p>
+    </div>
+    <div class="category-tabs" id="categoryTabs">
+      <button class="category-tab active" onclick="filterCategory('All',this)">All</button>
+      <button class="category-tab" onclick="filterCategory('Engineering',this)">Engineering</button>
+      <button class="category-tab" onclick="filterCategory('Design',this)">Design</button>
+      <button class="category-tab" onclick="filterCategory('Sales',this)">Sales</button>
+      <button class="category-tab" onclick="filterCategory('Operations',this)">Operations</button>
+      <button class="category-tab" onclick="filterCategory('Product',this)">Product</button>
+      <button class="category-tab" onclick="filterCategory('Data',this)">Data</button>
+      <button class="category-tab" onclick="filterCategory('Business',this)">Business</button>
     </div>
     <div class="positions-grid" id="jobsGrid"></div>
   </div>
@@ -1051,62 +1244,71 @@ textarea.form-control{resize:vertical;min-height:100px;}
     </div>
   </div>
 
-  <!-- CONTACT -->
-  <div class="contact-section">
-    <h2>Get in Touch</h2>
-    <p>Have questions about a role or the hiring process? Reach out to us.</p>
-    <div class="contact-cards">
-      <a class="contact-card" href="tel:+917023628763">
-        <span class="contact-card-icon">&#128222;</span>
-        <span>+91 7023628763</span>
-      </a>
-      <a class="contact-card" href="mailto:zentrixsales@gmail.com">
-        <span class="contact-card-icon">&#128231;</span>
-        <span>zentrixsales@gmail.com</span>
-      </a>
-      <a class="contact-card" href="mailto:zentrixsupport@gmail.com">
-        <span class="contact-card-icon">&#128231;</span>
-        <span>zentrixsupport@gmail.com</span>
-      </a>
-    </div>
-  </div>
-
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="footer-logo">
-          <img src="/assets/uploads/zentrix-logo-1.jpg" alt="Zentrix Solutions" />
+    <div class="footer-top-bar"></div>
+    <div class="footer-container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="/assets/uploads/IMG-20260314-WA0060-1.jpg" alt="Zentrix Solutions" />
+          </div>
+          <p class="footer-brand-desc">Building next-generation technology solutions with passionate innovators from around the world.</p>
+          <div class="footer-social">
+            <a class="footer-social-link" href="https://linkedin.com/company/zentrix-solutions" target="_blank" title="LinkedIn" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a class="footer-social-link" href="https://twitter.com/zentrixsolutions" target="_blank" title="Twitter/X" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
         </div>
-        <p>Building next-generation technology solutions with passionate innovators from around the world.</p>
-        <div class="social-links">
-          <a class="social-link" href="https://linkedin.com" target="_blank" title="LinkedIn">&#128101;</a>
-          <a class="social-link" href="https://twitter.com" target="_blank" title="Twitter/X">&#128038;</a>
+        <div class="footer-links-group">
+          <div class="footer-col">
+            <h4 class="footer-col-title">Company</h4>
+            <a class="footer-link" href="#">About Us</a>
+            <a class="footer-link" href="#" onclick="showPage('career');return false;">Careers</a>
+            <a class="footer-link" href="#">Blog</a>
+            <a class="footer-link" href="#">Press</a>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Support</h4>
+            <a class="footer-link" href="#">Help Center</a>
+            <a class="footer-link" href="#" onclick="showPage('track');return false;">Track Application</a>
+            <a class="footer-link" href="#faq" onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'});return false;">FAQ</a>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Contact</h4>
+            <a class="footer-link footer-contact-link" href="tel:+917023628763">
+              <span class="fcl-icon fcl-phone">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .97h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              </span>
+              +91 7023628763
+            </a>
+            <a class="footer-link footer-contact-link" href="mailto:zentrixsales@gmail.com">
+              <span class="fcl-icon fcl-sales">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </span>
+              zentrixsales@gmail.com
+            </a>
+            <a class="footer-link footer-contact-link" href="mailto:zentrixsupport@gmail.com">
+              <span class="fcl-icon fcl-support">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              </span>
+              zentrixsupport@gmail.com
+            </a>
+          </div>
         </div>
       </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <a href="#">About Us</a>
-        <a href="#">Careers</a>
-        <a href="#">Blog</a>
-        <a href="#">Press</a>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Zentrix Solutions. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <span class="footer-sep"></span>
+          <a href="#">Terms of Use</a>
+        </div>
       </div>
-      <div class="footer-col">
-        <h4>Support</h4>
-        <a href="#">Help Center</a>
-        <a href="#" onclick="showPage('track');return false;">Track Application</a>
-        <a href="#">FAQ</a>
-      </div>
-      <div class="footer-col">
-        <h4>Contact Us</h4>
-        <div class="footer-contact-item"><span>&#128222;</span><span>+91 7023628763</span></div>
-        <div class="footer-contact-item"><span>&#128231;</span><span>zentrixsales@gmail.com</span></div>
-        <div class="footer-contact-item"><span>&#128231;</span><span>zentrixsupport@gmail.com</span></div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Zentrix Solutions. All rights reserved.</p>
-      <p>Empowering careers, shaping the future.</p>
     </div>
   </footer>
 </div>
@@ -1336,7 +1538,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
   <div class="admin-login-page">
     <div class="login-card" id="loginCard">
       <div class="login-logo">
-        <img src="/assets/uploads/zentrix-logo-1.jpg" alt="Zentrix Solutions" />
+        <img src="/assets/uploads/IMG-20260314-WA0060-1.jpg" alt="Zentrix Solutions" />
         <div class="login-title">Admin Portal</div>
         <div class="login-sub">Zentrix Solutions &mdash; Secure Access</div>
       </div>
@@ -1361,7 +1563,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
 <div class="page" id="page-admin">
   <div class="admin-header">
     <div class="admin-logo">
-      <img src="/assets/uploads/zentrix-logo-1.jpg" alt="Zentrix Solutions" />
+      <img src="/assets/uploads/IMG-20260314-WA0060-1.jpg" alt="Zentrix Solutions" />
       <span class="admin-logo-title">Admin Panel</span>
     </div>
     <div class="admin-nav-tabs">
@@ -1377,6 +1579,19 @@ textarea.form-control{resize:vertical;min-height:100px;}
     <!-- Applications Tab -->
     <div id="adminTabApplications">
       <div class="stats-grid" id="statsGrid"></div>
+      <div class="bulk-bar hidden" id="bulkBar">
+        <span class="bulk-bar-count" id="bulkCount">0 selected</span>
+        <select class="bulk-select" id="bulkStatusSelect">
+          <option value="">Change status to...</option>
+          <option>Pending</option>
+          <option>Under Review</option>
+          <option>Shortlisted</option>
+          <option>Rejected</option>
+          <option>Selected</option>
+        </select>
+        <button class="bulk-apply-btn" onclick="applyBulkStatus()">&#10003; Apply</button>
+        <button class="bulk-cancel-btn" onclick="clearBulkSelection()">&#10005; Cancel</button>
+      </div>
       <div class="controls-row">
         <div class="search-input-wrap">
           <span class="search-ico">&#128269;</span>
@@ -1391,11 +1606,13 @@ textarea.form-control{resize:vertical;min-height:100px;}
           <option>Selected</option>
         </select>
         <button class="refresh-btn" onclick="renderAdmin()">&#8635; Refresh</button>
+        <button class="export-btn" onclick="exportCSV()">&#8659; Export CSV</button>
       </div>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
+              <th><input type="checkbox" class="row-check" id="selectAllCheck" onchange="toggleSelectAll(this)" /></th>
               <th>#</th>
               <th>Tracking ID</th>
               <th>Name</th>
@@ -1437,12 +1654,12 @@ const Storage = {
     const stored = this.get('ztx_positions');
     if (stored && stored.length > 0) return stored;
     const defaults = [
-      { id:'p1', title:'Senior Full Stack Developer', dept:'Engineering', location:'Remote', exp:'5+ yrs', type:'Full-time' },
-      { id:'p2', title:'UX/UI Designer', dept:'Design', location:'Bangalore', exp:'3+ yrs', type:'Full-time' },
-      { id:'p3', title:'Product Manager', dept:'Product', location:'Mumbai', exp:'4+ yrs', type:'Full-time' },
-      { id:'p4', title:'Data Scientist', dept:'Data', location:'Hyderabad', exp:'3+ yrs', type:'Full-time' },
-      { id:'p5', title:'DevOps Engineer', dept:'Engineering', location:'Remote', exp:'4+ yrs', type:'Full-time' },
-      { id:'p6', title:'Business Analyst', dept:'Business', location:'Delhi', exp:'2+ yrs', type:'Full-time' },
+      { id:'p1', title:'Senior Full Stack Developer', dept:'Engineering', location:'Remote', exp:'5+ yrs', type:'Full-time', postedDate:'2026-03-01' },
+      { id:'p2', title:'UX/UI Designer', dept:'Design', location:'Bangalore', exp:'3+ yrs', type:'Full-time', postedDate:'2026-03-05' },
+      { id:'p3', title:'Product Manager', dept:'Product', location:'Mumbai', exp:'4+ yrs', type:'Full-time', postedDate:'2026-03-08' },
+      { id:'p4', title:'Data Scientist', dept:'Data', location:'Hyderabad', exp:'3+ yrs', type:'Full-time', postedDate:'2026-03-10' },
+      { id:'p5', title:'DevOps Engineer', dept:'Engineering', location:'Remote', exp:'4+ yrs', type:'Full-time', postedDate:'2026-03-12' },
+      { id:'p6', title:'Business Analyst', dept:'Business', location:'Delhi', exp:'2+ yrs', type:'Full-time', postedDate:'2026-03-15' },
     ];
     this.set('ztx_positions', defaults);
     return defaults;
@@ -1501,16 +1718,38 @@ function switchAdminTab(tab) {
 // ============================================================
 // JOB CARDS (public)
 // ============================================================
+let _activeCategoryFilter = 'All';
+
+function filterCategory(cat, btn) {
+  _activeCategoryFilter = cat;
+  document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderJobs();
+}
+
 function renderJobs() {
   const jobs = Storage.getPositions();
-  _filteredJobs = [...jobs];
+  let filtered = _activeCategoryFilter === 'All' ? [...jobs] : jobs.filter(j => j.dept === _activeCategoryFilter);
+  _filteredJobs = filtered;
   const grid = document.getElementById('jobsGrid');
   if (!grid) return;
-  if (_filteredJobs.length === 0) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim);">No open positions at this time. Check back soon!</div>';
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="no-jobs-state">
+      <div class="no-jobs-icon">&#128269;</div>
+      <div class="no-jobs-title">No positions available${_activeCategoryFilter !== 'All' ? ' in ' + escHtml(_activeCategoryFilter) : ''}</div>
+      <div class="no-jobs-sub">Check back soon — we post new roles regularly! Leave your email and we'll notify you.</div>
+      <div class="notify-row">
+        <input type="email" class="notify-input" id="notifyEmailInput" placeholder="your@email.com" />
+        <button class="notify-btn" onclick="subscribeNotify()">Notify Me</button>
+      </div>
+    </div>`;
+    const heroJobs = document.getElementById('heroOpenJobs');
+    if (heroJobs) heroJobs.textContent = jobs.length;
     return;
   }
-  grid.innerHTML = _filteredJobs.map(j => `
+  grid.innerHTML = filtered.map(j => {
+    const dateStr = j.postedDate ? new Date(j.postedDate).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : 'Recently posted';
+    return `
     <div class="job-card">
       <div class="job-dept">${escHtml(j.dept)}</div>
       <div class="job-title">${escHtml(j.title)}</div>
@@ -1519,11 +1758,25 @@ function renderJobs() {
         <span class="job-meta-item">&#128197; ${escHtml(j.exp)}</span>
         ${j.type ? `<span class="job-meta-item">&#128188; ${escHtml(j.type)}</span>` : ''}
       </div>
+      <div class="job-meta-extra">
+        <span>&#128197; Posted: ${escHtml(dateStr)}</span>
+      </div>
       <button class="job-apply-btn" onclick="applyForJob('${escAttr(j.title)}')">Apply Now &rarr;</button>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
   const heroJobs = document.getElementById('heroOpenJobs');
   if (heroJobs) heroJobs.textContent = jobs.length;
+}
+
+function subscribeNotify() {
+  const inp = document.getElementById('notifyEmailInput');
+  if (!inp) return;
+  const email = inp.value.trim();
+  if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) { inp.style.borderColor='var(--rejected)'; return; }
+  inp.style.borderColor='';
+  inp.disabled = true;
+  inp.value = '';
+  inp.placeholder = 'Thank you! We will notify you.';
 }
 
 function populatePositionDropdown() {
@@ -1626,7 +1879,7 @@ function savePosition() {
       jobs[idx] = { ...jobs[idx], title, dept, location, exp, type };
     }
   } else {
-    jobs.push({ id: 'p' + Date.now(), title, dept, location, exp, type });
+    jobs.push({ id: 'p' + Date.now(), title, dept, location, exp, type, postedDate: new Date().toISOString().split('T')[0] });
   }
   Storage.savePositions(jobs);
   closeModal('positionModal');
@@ -2022,7 +2275,8 @@ function renderTable() {
       ? `<button class="action-btn" onclick="openDocsModal('${escAttr(app.trackingId)}')">&#128196; View</button>`
       : '<span style="color:var(--dim);font-size:.78rem;">None</span>';
     return `
-      <tr class="${app.isNew ? 'table-new' : ''}">
+      <tr class="${app.isNew ? 'table-new' : ''}" id="row-${app.trackingId}">
+        <td><input type="checkbox" class="row-check bulk-check" value="${app.trackingId}" onchange="onBulkCheckChange()" /></td>
         <td>${i+1}</td>
         <td><span style="font-size:.78rem;font-family:monospace;color:var(--brand-blue);">${app.trackingId}</span>${app.isNew ? '<span class="new-badge">NEW</span>' : ''}</td>
         <td>${escHtml(app.name)}</td>
@@ -2089,6 +2343,10 @@ function openDetailModal(trackingId) {
   `;
   const sel = document.getElementById('detailStatusSelect');
   if (sel) sel.value = app.status;
+  const notesEl = document.getElementById('detailNotes');
+  if (notesEl) notesEl.value = app.notes || '';
+  const savedMsg = document.getElementById('notesSavedMsg');
+  if (savedMsg) savedMsg.classList.remove('show');
   document.getElementById('detailModal').classList.remove('hidden');
 }
 
@@ -2134,6 +2392,84 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
     if (e.target === this) closeModal(this.id);
   });
 });
+
+// ============================================================
+// EXPORT CSV
+// ============================================================
+function exportCSV() {
+  const apps = Storage.getApps();
+  if (!apps.length) { alert('No applications to export.'); return; }
+  const headers = ['Tracking ID','Name','Email','Mobile','Position','Experience','Skills','Status','Submitted','Notes'];
+  const rows = apps.map(a => [
+    a.trackingId, a.name, a.email, a.mobile, a.position, a.experience, (a.skills||'').replace(/,/g,';'), a.status, formatDate(a.submittedAt), (a.notes||'').replace(/,/g,';').replace(/\n/g,' ')
+  ]);
+  const csvContent = [headers, ...rows].map(row => row.map(v => '"' + String(v||'').replace(/"/g,'""') + '"').join(',')).join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'zentrix-applications-' + new Date().toISOString().split('T')[0] + '.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ============================================================
+// BULK STATUS UPDATE
+// ============================================================
+function onBulkCheckChange() {
+  const checked = document.querySelectorAll('.bulk-check:checked');
+  const bulkBar = document.getElementById('bulkBar');
+  const countEl = document.getElementById('bulkCount');
+  if (checked.length > 0) {
+    bulkBar.classList.remove('hidden');
+    countEl.textContent = checked.length + ' selected';
+  } else {
+    bulkBar.classList.add('hidden');
+  }
+}
+
+function toggleSelectAll(masterCheck) {
+  document.querySelectorAll('.bulk-check').forEach(c => { c.checked = masterCheck.checked; });
+  onBulkCheckChange();
+}
+
+function applyBulkStatus() {
+  const sel = document.getElementById('bulkStatusSelect');
+  const newStatus = sel ? sel.value : '';
+  if (!newStatus) { alert('Please select a status to apply.'); return; }
+  const checked = document.querySelectorAll('.bulk-check:checked');
+  if (!checked.length) return;
+  const ids = Array.from(checked).map(c => c.value);
+  const apps = Storage.getApps();
+  ids.forEach(id => {
+    const idx = apps.findIndex(a => a.trackingId === id);
+    if (idx !== -1) { apps[idx].status = newStatus; apps[idx].isNew = false; }
+  });
+  Storage.saveApps(apps);
+  clearBulkSelection();
+  renderAdmin();
+}
+
+function clearBulkSelection() {
+  document.querySelectorAll('.bulk-check').forEach(c => { c.checked = false; });
+  const mc = document.getElementById('selectAllCheck');
+  if (mc) mc.checked = false;
+  const bulkBar = document.getElementById('bulkBar');
+  if (bulkBar) bulkBar.classList.add('hidden');
+}
+
+// ============================================================
+// NOTES
+// ============================================================
+function saveNotes() {
+  if (!_currentDetailId) return;
+  const notesEl = document.getElementById('detailNotes');
+  const notes = notesEl ? notesEl.value : '';
+  const apps = Storage.getApps();
+  const idx = apps.findIndex(a => a.trackingId === _currentDetailId);
+  if (idx !== -1) { apps[idx].notes = notes; Storage.saveApps(apps); }
+  const savedMsg = document.getElementById('notesSavedMsg');
+  if (savedMsg) { savedMsg.classList.add('show'); setTimeout(() => savedMsg.classList.remove('show'), 2000); }
+}
 
 // ============================================================
 // FILE PREVIEW / DOWNLOAD
