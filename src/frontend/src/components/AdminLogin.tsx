@@ -30,9 +30,11 @@ export default function AdminLogin({ onNavigate }: AdminLoginProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-700 to-green-600 flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-md text-center">
-        <span className="text-3xl font-bold tracking-widest bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-sm block mb-6">
-          ZENTRIX
-        </span>
+        <img
+          src="/assets/uploads/IMG-20260314-WA0060-3-1.jpg"
+          alt="Zentrix Solutions"
+          className="h-14 w-auto object-contain mx-auto mb-6"
+        />
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Admin Portal</h2>
         <p className="text-gray-500 text-sm mb-8">
           Sign in with Internet Identity to access the admin dashboard

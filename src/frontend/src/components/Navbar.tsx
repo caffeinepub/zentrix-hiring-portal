@@ -26,20 +26,11 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
             onClick={() => onNavigate("landing")}
             className="flex items-center"
           >
-            <span
-              className="text-2xl font-bold tracking-widest select-none"
-              style={{
-                background:
-                  "linear-gradient(90deg, #B8860B 0%, #FFD700 40%, #DAA520 70%, #B8860B 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                filter: "drop-shadow(0 0 6px rgba(218,165,32,0.35))",
-                letterSpacing: "0.15em",
-              }}
-            >
-              ZENTRIX
-            </span>
+            <img
+              src="/assets/uploads/IMG-20260314-WA0060-3-1.jpg"
+              alt="Zentrix Solutions"
+              className="h-10 w-auto object-contain"
+            />
           </button>
           <div className="hidden md:flex items-center gap-8">
             <button

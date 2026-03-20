@@ -11,9 +11,11 @@ export default function Footer({ onNavigate }: FooterProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
-            <span className="text-2xl font-bold tracking-widest bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-sm mb-4 block">
-              ZENTRIX
-            </span>
+            <img
+              src="/assets/uploads/IMG-20260314-WA0060-3-1.jpg"
+              alt="Zentrix Solutions"
+              className="h-10 w-auto object-contain mb-4 brightness-0 invert"
+            />
             <p className="text-sm text-gray-400 leading-relaxed">
               Building the future with technology and talent. Join us in
               transforming the digital landscape.
