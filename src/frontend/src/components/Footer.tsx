@@ -5,17 +5,25 @@ interface FooterProps {
 }
 
 export default function Footer({ onNavigate }: FooterProps) {
+  const year = new Date().getFullYear();
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="h-1 bg-gradient-to-r from-blue-600 to-green-500" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
-            <img
-              src="/assets/uploads/IMG-20260314-WA0060-3-1.jpg"
-              alt="Zentrix Solutions"
-              className="h-10 w-auto object-contain mb-4 brightness-0 invert"
-            />
+            <span
+              style={{
+                background:
+                  "linear-gradient(135deg, #d4a017, #f5c842, #b8860b)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+              className="text-2xl font-black tracking-widest block mb-4"
+            >
+              ZENTRIX
+            </span>
             <p className="text-sm text-gray-400 leading-relaxed">
               Building the future with technology and talent. Join us in
               transforming the digital landscape.
@@ -104,7 +112,7 @@ export default function Footer({ onNavigate }: FooterProps) {
               <li className="flex items-center gap-2">
                 <svg
                   aria-hidden="true"
-                  className="w-4 h-4 text-blue-400"
+                  className="w-4 h-4 text-blue-400 shrink-0"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -123,7 +131,7 @@ export default function Footer({ onNavigate }: FooterProps) {
               <li className="flex items-center gap-2">
                 <svg
                   aria-hidden="true"
-                  className="w-4 h-4 text-green-400"
+                  className="w-4 h-4 text-green-400 shrink-0"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -137,7 +145,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 </svg>
                 <a
                   href="mailto:zentrixsales@gmail.com"
-                  className="hover:text-white"
+                  className="hover:text-white break-all"
                 >
                   zentrixsales@gmail.com
                 </a>
@@ -145,7 +153,7 @@ export default function Footer({ onNavigate }: FooterProps) {
               <li className="flex items-center gap-2">
                 <svg
                   aria-hidden="true"
-                  className="w-4 h-4 text-green-400"
+                  className="w-4 h-4 text-green-400 shrink-0"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -159,7 +167,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 </svg>
                 <a
                   href="mailto:zentrixsupport@gmail.com"
-                  className="hover:text-white"
+                  className="hover:text-white break-all"
                 >
                   zentrixsupport@gmail.com
                 </a>
@@ -168,7 +176,15 @@ export default function Footer({ onNavigate }: FooterProps) {
           </div>
         </div>
         <div className="mt-10 pt-6 border-t border-gray-800 text-center text-sm text-gray-500">
-          © 2025 Zentrix Solutions. All rights reserved.
+          © {year} Zentrix Solutions. All rights reserved. Built with ❤️ using{" "}
+          <a
+            href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
+            target="_blank"
+            rel="noreferrer"
+            className="text-gray-400 hover:text-gray-200 underline"
+          >
+            caffeine.ai
+          </a>
         </div>
       </div>
     </footer>

@@ -323,12 +323,19 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
       <header className="bg-gradient-to-r from-blue-700 to-green-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img
-              src="/assets/uploads/IMG-20260314-WA0060-3-1.jpg"
-              alt="Zentrix Solutions"
-              className="h-8 w-auto object-contain brightness-0 invert"
-            />
-            <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded-full">
+            <span
+              style={{
+                background:
+                  "linear-gradient(135deg, #d4a017, #f5c842, #b8860b)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+              className="text-xl font-black tracking-widest"
+            >
+              ZENTRIX
+            </span>
+            <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">
               Admin
             </span>
           </div>

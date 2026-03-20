@@ -1,25 +1,28 @@
 # Zentrix Hiring Portal
 
 ## Current State
-Version 27 is live. All 4 branding locations (Navbar, Footer, AdminLogin, AdminDashboard) use a text-only "ZENTRIX" gold gradient span. No image tags exist.
+Full-stack React + Motoko hiring portal with Landing page, Application form, Track page, Admin login, and Admin dashboard. All data stored on ICP blockchain.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Logo image `/assets/uploads/IMG-20260314-WA0060-3-1.jpg` as `<img>` tag in Navbar, Footer, AdminLogin, AdminDashboard
+- Loading state for positions fetch in LandingPage
+- Better empty state for positions when loading vs truly empty
 
 ### Modify
-- Navbar: Replace ZENTRIX text span with image logo (h-10, auto width, object-contain)
-- Footer: Replace ZENTRIX text span with image logo (h-10, white filter for dark background)
-- AdminLogin: Replace ZENTRIX text span with image logo (h-14, centered)
-- AdminDashboard header: Replace ZENTRIX text span with image logo (h-8), remove separate "Zentrix Solutions" text next to it
+- Navbar: Remove broken `<img>` tag, replace with gold gradient "ZENTRIX" text logo
+- Footer: Remove broken `<img>` tag, replace with gold gradient "ZENTRIX" text logo
+- AdminLogin: Remove broken `<img>` tag, replace with gold gradient "ZENTRIX" text logo
+- AdminDashboard header: Remove broken `<img>` tag, replace with "ZENTRIX" text logo
+- LandingPage: Improve overall UI - better hero, richer About cards, improved Why Join cards, better positions grid with skeleton loading
+- All section cards: Better visual hierarchy, improved spacing, clearer CTAs
 
 ### Remove
-- All ZENTRIX text-logo spans from the 4 branding locations
+- All `<img src="/assets/uploads/IMG-20260314-WA0060-3-1.jpg">` tags from all components
 
 ## Implementation Plan
-1. In Navbar.tsx: swap ZENTRIX span with `<img src="/assets/uploads/IMG-20260314-WA0060-3-1.jpg" alt="Zentrix Solutions" className="h-10 w-auto object-contain" />`
-2. In Footer.tsx: swap ZENTRIX span with `<img src="/assets/uploads/IMG-20260314-WA0060-3-1.jpg" alt="Zentrix Solutions" className="h-10 w-auto object-contain brightness-0 invert" />`
-3. In AdminLogin.tsx: swap ZENTRIX span with `<img src="/assets/uploads/IMG-20260314-WA0060-3-1.jpg" alt="Zentrix Solutions" className="h-14 w-auto object-contain mx-auto mb-6" />`
-4. In AdminDashboard.tsx: swap ZENTRIX span with `<img src="/assets/uploads/IMG-20260314-WA0060-3-1.jpg" alt="Zentrix Solutions" className="h-8 w-auto object-contain brightness-0 invert" />` and remove the adjacent "Zentrix Solutions" text span
-5. Validate build
+1. Fix Navbar.tsx - remove img, add ZENTRIX text logo with gold gradient
+2. Fix Footer.tsx - remove img, add ZENTRIX text logo with gold gradient
+3. Fix AdminLogin.tsx - remove img, add ZENTRIX text logo
+4. Fix AdminDashboard.tsx - remove img in header, add ZENTRIX text logo
+5. Improve LandingPage.tsx - add loading state, improve all section UIs
