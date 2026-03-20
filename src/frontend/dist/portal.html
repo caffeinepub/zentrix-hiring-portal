@@ -987,12 +987,12 @@ textarea.form-control{resize:vertical;min-height:100px;}
 .why-card:hover .why-icon{transform:scale(1.1) rotate(-4deg);}
 .why-title{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:10px;position:relative;z-index:1;}
 .why-desc{color:var(--muted);font-size:.88rem;line-height:1.7;position:relative;z-index:1;}
-</style></head>
+</style><script>window.addEventListener("DOMContentLoaded",function(){var logo=window.parent</head></head>window.parent.__zentrixLogo;if(logo){document.querySelectorAll("img[data-zentrix-logo]").forEach(function(img){img.src=logo;});}});</script></head>
 <body>
 
 <!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
-  <div class="loading-logo"><img src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:56px;width:auto;" /></div>
+  <div class="loading-logo"><img data-zentrix-logo src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:56px;width:auto;" /></div>
   <div class="loading-bar"><div class="loading-bar-inner"></div></div>
 </div>
 
@@ -1070,7 +1070,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
 <!-- NAV -->
 <nav class="nav" id="mainNav">
   <a class="nav-logo" href="#" onclick="showPage('career');return false;">
-    <img src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:38px;width:auto;" />
+    <img data-zentrix-logo src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:38px;width:auto;" />
   </a>
   <div class="nav-links">
     <a href="#" onclick="scrollToSection('about');return false;">About</a>
@@ -1252,7 +1252,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
       <div class="footer-main">
         <div class="footer-brand">
           <div class="footer-logo">
-            <img src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:48px;width:auto;filter:brightness(0) invert(1);" />
+            <img data-zentrix-logo src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:48px;width:auto;filter:brightness(0) invert(1);" />
           </div>
           <p class="footer-brand-desc">Building next-generation technology solutions with passionate innovators from around the world.</p>
           <div class="footer-social">
@@ -1539,7 +1539,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
   <div class="admin-login-page">
     <div class="login-card" id="loginCard">
       <div class="login-logo">
-        <img src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:52px;width:auto;" />
+        <img data-zentrix-logo src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:52px;width:auto;" />
         <div class="login-title">Admin Portal</div>
         <div class="login-sub">Zentrix Solutions &mdash; Secure Access</div>
       </div>
@@ -1564,7 +1564,7 @@ textarea.form-control{resize:vertical;min-height:100px;}
 <div class="page" id="page-admin">
   <div class="admin-header">
     <div class="admin-logo">
-      <img src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:32px;width:auto;" />
+      <img data-zentrix-logo src="/assets/IMG-20260314-WA0060-2.jpg" alt="Zentrix Solutions" style="height:32px;width:auto;" />
       <span class="admin-logo-title">| Admin Panel</span>
     </div>
     <div class="admin-nav-tabs">
@@ -2480,9 +2480,9 @@ function previewFile(data, name) {
   const win = window.open();
   if (!win) { alert('Please allow pop-ups to preview files.'); return; }
   if (data.startsWith('data:image/')) {
-    win.document.write('<html><head><title>' + escHtml(name) + '</title></head><body style="margin:0;background:#f7f7f7;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="' + data + '" style="max-width:100%;max-height:100vh;object-fit:contain;" /></body></html>');
+    win.document.write('<html><head><title>' + escHtml(name) + '</title><script>window.addEventListener("DOMContentLoaded",function(){var logo=window.parent</head></head>window.parent.__zentrixLogo;if(logo){document.querySelectorAll("img[data-zentrix-logo]").forEach(function(img){img.src=logo;});}});</script></head><body style="margin:0;background:#f7f7f7;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="' + data + '" style="max-width:100%;max-height:100vh;object-fit:contain;" /></body></html>');
   } else if (data.startsWith('data:application/pdf') || name.toLowerCase().endsWith('.pdf')) {
-    win.document.write('<html><head><title>' + escHtml(name) + '</title></head><body style="margin:0;"><embed src="' + data + '" type="application/pdf" width="100%" height="100%" style="position:fixed;inset:0;" /></body></html>');
+    win.document.write('<html><head><title>' + escHtml(name) + '</title><script>window.addEventListener("DOMContentLoaded",function(){var logo=window.parent</head></head>window.parent.__zentrixLogo;if(logo){document.querySelectorAll("img[data-zentrix-logo]").forEach(function(img){img.src=logo;});}});</script></head><body style="margin:0;"><embed src="' + data + '" type="application/pdf" width="100%" height="100%" style="position:fixed;inset:0;" /></body></html>');
   } else {
     const a = win.document.createElement('a');
     a.href = data; a.download = name; a.click();
