@@ -323,16 +323,9 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
       <header className="bg-gradient-to-r from-blue-700 to-green-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img
-              src="https://i.ibb.co/Z1BNhKFr/IMG-20260314-WA0060.jpg"
-              width="160"
-              height="40"
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
-              }}
-              alt="Zentrix Solutions"
-              className="h-9 w-auto object-contain brightness-0 invert"
-            />
+            <span className="text-xl font-bold tracking-widest bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-sm">
+              ZENTRIX
+            </span>
             <div>
               <span className="font-bold">Zentrix Solutions</span>
               <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded-full">

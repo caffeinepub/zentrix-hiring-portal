@@ -24,18 +24,22 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
           <button
             type="button"
             onClick={() => onNavigate("landing")}
-            className="flex items-center gap-2"
+            className="flex items-center"
           >
-            <img
-              src="https://i.ibb.co/Z1BNhKFr/IMG-20260314-WA0060.jpg"
-              width="160"
-              height="40"
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
+            <span
+              className="text-2xl font-bold tracking-widest select-none"
+              style={{
+                background:
+                  "linear-gradient(90deg, #B8860B 0%, #FFD700 40%, #DAA520 70%, #B8860B 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                filter: "drop-shadow(0 0 6px rgba(218,165,32,0.35))",
+                letterSpacing: "0.15em",
               }}
-              alt="Zentrix Solutions"
-              className="h-9 w-auto object-contain"
-            />
+            >
+              ZENTRIX
+            </span>
           </button>
           <div className="hidden md:flex items-center gap-8">
             <button
