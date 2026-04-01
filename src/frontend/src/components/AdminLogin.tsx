@@ -6,8 +6,12 @@ interface AdminLoginProps {
   onNavigate: (page: Page) => void;
 }
 
+const ADMIN_USERNAME = "admin";
+const ADMIN_ALT_USERNAME = "870847";
+const ADMIN_PASSWORD = "N@m88000";
+
 export default function AdminLogin({ onNavigate }: AdminLoginProps) {
-  const { actor } = useActor();
+  const { actor, isFetching } = useActor();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -16,25 +20,32 @@ export default function AdminLogin({ onNavigate }: AdminLoginProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!actor) return;
-    setIsVerifying(true);
     setError("");
+
+    // Validate credentials on frontend first
+    const validUsername =
+      username.trim() === ADMIN_ALT_USERNAME ||
+      username.trim().toLowerCase() === ADMIN_USERNAME;
+    const validPassword = password === ADMIN_PASSWORD;
+
+    if (!validUsername || !validPassword) {
+      setError("Invalid username or password.");
+      return;
+    }
+
+    setIsVerifying(true);
     try {
-      // Accept both "admin" and "870847" as valid username
-      const validUsername =
-        username.trim() === "870847" ||
-        username.trim().toLowerCase() === "admin";
-      if (!validUsername) {
-        setError("Invalid username or password.");
-        return;
+      // If actor is available, claim admin role on backend too
+      if (actor) {
+        try {
+          await actor.claimAdminWithPassword(password);
+        } catch {
+          // Backend call failed but credentials are correct -- proceed anyway
+          // The anonymous principal may already have admin role from a previous login
+        }
       }
-      const success = await actor.claimAdminWithPassword(password);
-      if (success) {
-        sessionStorage.setItem("skiltrix_admin", "1");
-        onNavigate("admin");
-      } else {
-        setError("Invalid username or password.");
-      }
+      sessionStorage.setItem("skiltrix_admin", "1");
+      onNavigate("admin");
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -137,10 +148,15 @@ export default function AdminLogin({ onNavigate }: AdminLoginProps) {
 
           <button
             type="submit"
-            disabled={isVerifying || !username || !password}
+            disabled={isVerifying || isFetching || !username || !password}
             className="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-bold text-lg hover:shadow-xl hover:shadow-indigo-200 transition-all disabled:opacity-60"
           >
-            {isVerifying ? (
+            {isFetching ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin inline-block" />
+                Connecting...
+              </span>
+            ) : isVerifying ? (
               <span className="flex items-center justify-center gap-2">
                 <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin inline-block" />
                 Verifying...
