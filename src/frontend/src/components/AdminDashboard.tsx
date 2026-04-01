@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Page } from "../App";
 import {
   ApplicationStatus,
+  type BlobFileRef,
   type DashboardStats,
   type JobApplication,
   type JobPosting,
   Variant_contract_partTime_fullTime,
 } from "../backend";
 import { useActor } from "../hooks/useActor";
-import { useInternetIdentity } from "../hooks/useInternetIdentity";
 
 interface AdminDashboardProps {
   onNavigate: (page: Page) => void;
@@ -78,7 +78,6 @@ const emptyJobForm: JobFormData = {
 
 export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   const { actor } = useActor();
-  const { clear } = useInternetIdentity();
   const [tab, setTab] = useState<AdminTab>("applications");
   const [apps, setApps] = useState<JobApplication[]>([]);
   const [jobs, setJobs] = useState<JobPosting[]>([]);
@@ -232,7 +231,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
       .join("\n");
     const link = document.createElement("a");
     link.href = `data:text/csv;charset=utf-8,${encodeURIComponent(csv)}`;
-    link.download = `zentrix-applications-${Date.now()}.csv`;
+    link.download = `skiltrix-applications-${Date.now()}.csv`;
     link.click();
   };
 
@@ -302,7 +301,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   };
 
   const handleLogout = () => {
-    clear();
+    sessionStorage.removeItem("skiltrix_admin");
     onNavigate("landing");
   };
 
@@ -320,20 +319,20 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Admin Header */}
-      <header className="bg-gradient-to-r from-blue-700 to-green-600 text-white">
+      <header className="bg-gradient-to-r from-indigo-700 to-cyan-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span
               style={{
                 background:
-                  "linear-gradient(135deg, #d4a017, #f5c842, #b8860b)",
+                  "linear-gradient(135deg, #4f46e5, #7c3aed, #06b6d4)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
-              className="text-xl font-black tracking-widest"
+              className="text-xl font-black tracking-widest bg-white px-3 py-1 rounded-lg"
             >
-              ZENTRIX
+              SKILTRIX
             </span>
             <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">
               Admin
@@ -418,14 +417,22 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           <button
             type="button"
             onClick={() => setTab("applications")}
-            className={`px-6 py-2.5 rounded-full font-semibold text-sm transition-all ${tab === "applications" ? "bg-gradient-to-r from-blue-600 to-green-500 text-white shadow-md" : "bg-white text-gray-600 border border-gray-200 hover:border-blue-300"}`}
+            className={`px-6 py-2.5 rounded-full font-semibold text-sm transition-all ${
+              tab === "applications"
+                ? "bg-gradient-to-r from-indigo-600 to-cyan-500 text-white shadow-md"
+                : "bg-white text-gray-600 border border-gray-200 hover:border-indigo-300"
+            }`}
           >
             Applications ({apps.length})
           </button>
           <button
             type="button"
             onClick={() => setTab("positions")}
-            className={`px-6 py-2.5 rounded-full font-semibold text-sm transition-all ${tab === "positions" ? "bg-gradient-to-r from-blue-600 to-green-500 text-white shadow-md" : "bg-white text-gray-600 border border-gray-200 hover:border-blue-300"}`}
+            className={`px-6 py-2.5 rounded-full font-semibold text-sm transition-all ${
+              tab === "positions"
+                ? "bg-gradient-to-r from-indigo-600 to-cyan-500 text-white shadow-md"
+                : "bg-white text-gray-600 border border-gray-200 hover:border-indigo-300"
+            }`}
           >
             Manage Positions ({jobs.length})
           </button>
@@ -441,14 +448,14 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by name, email, tracking ID..."
-                className="flex-1 min-w-48 px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 min-w-48 px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
               <select
                 value={statusFilter}
                 onChange={(e) =>
                   setStatusFilter(e.target.value as ApplicationStatus | "all")
                 }
-                className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="all">All Status</option>
                 {STATUS_OPTIONS.map((s) => (
@@ -467,7 +474,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
               <button
                 type="button"
                 onClick={exportCSV}
-                className="px-4 py-2.5 rounded-xl bg-blue-50 text-blue-700 text-sm font-semibold hover:bg-blue-100"
+                className="px-4 py-2.5 rounded-xl bg-indigo-50 text-indigo-700 text-sm font-semibold hover:bg-indigo-100"
               >
                 Export CSV
               </button>
@@ -475,8 +482,8 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
 
             {/* Bulk Actions */}
             {selected.size > 0 && (
-              <div className="bg-blue-50 border border-blue-200 rounded-2xl p-3 mb-4 flex flex-wrap gap-3 items-center">
-                <span className="text-sm text-blue-700 font-medium">
+              <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-3 mb-4 flex flex-wrap gap-3 items-center">
+                <span className="text-sm text-indigo-700 font-medium">
                   {selected.size} selected
                 </span>
                 <select
@@ -484,7 +491,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                   onChange={(e) =>
                     setBulkStatus(e.target.value as ApplicationStatus)
                   }
-                  className="px-3 py-2 rounded-lg border border-blue-200 text-sm"
+                  className="px-3 py-2 rounded-lg border border-indigo-200 text-sm"
                 >
                   {STATUS_OPTIONS.map((s) => (
                     <option key={s.value} value={s.value}>
@@ -495,7 +502,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                 <button
                   type="button"
                   onClick={handleBulkUpdate}
-                  className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold"
+                  className="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold"
                 >
                   Apply to Selected
                 </button>
@@ -586,7 +593,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                             />
                           </td>
                           <td className="px-4 py-3 text-gray-400">{i + 1}</td>
-                          <td className="px-4 py-3 font-mono text-xs text-blue-600 whitespace-nowrap">
+                          <td className="px-4 py-3 font-mono text-xs text-indigo-600 whitespace-nowrap">
                             {app.trackingId}
                           </td>
                           <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
@@ -615,7 +622,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                                   e.target.value as ApplicationStatus,
                                 )
                               }
-                              className="px-2 py-1 rounded-lg border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              className="px-2 py-1 rounded-lg border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500"
                             >
                               {STATUS_OPTIONS.map((s) => (
                                 <option key={s.value} value={s.value}>
@@ -629,7 +636,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                               <button
                                 type="button"
                                 onClick={() => openDetail(app)}
-                                className="px-3 py-1 text-xs bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 font-medium"
+                                className="px-3 py-1 text-xs bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 font-medium"
                               >
                                 Details
                               </button>
@@ -659,7 +666,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
               <button
                 type="button"
                 onClick={() => openJobModal()}
-                className="px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-green-500 text-white font-semibold text-sm hover:shadow-lg transition-all"
+                className="px-6 py-2.5 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-semibold text-sm hover:shadow-lg transition-all"
               >
                 + Add Position
               </button>
@@ -696,7 +703,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                       <button
                         type="button"
                         onClick={() => openJobModal(job.id)}
-                        className="flex-1 py-2 text-sm bg-blue-50 text-blue-700 rounded-xl hover:bg-blue-100 font-medium"
+                        className="flex-1 py-2 text-sm bg-indigo-50 text-indigo-700 rounded-xl hover:bg-indigo-100 font-medium"
                       >
                         Edit
                       </button>
@@ -743,7 +750,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
                   <p className="text-gray-500 text-xs">Tracking ID</p>
-                  <p className="font-mono font-semibold text-blue-600">
+                  <p className="font-mono font-semibold text-indigo-600">
                     {detailApp.trackingId}
                   </p>
                 </div>
@@ -776,31 +783,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                   </p>
                 </div>
               )}
-              <div>
-                <p className="text-gray-500 text-xs mb-1">Documents</p>
-                <div className="bg-gray-50 rounded-xl p-3 text-sm space-y-1">
-                  {detailApp.resumeFileId && (
-                    <p className="text-blue-600">📄 Resume uploaded</p>
-                  )}
-                  {detailApp.aadhaarFileId && (
-                    <p className="text-blue-600">📄 Aadhaar uploaded</p>
-                  )}
-                  {detailApp.panFileId && (
-                    <p className="text-blue-600">📄 PAN uploaded</p>
-                  )}
-                  {detailApp.selfieFileId && (
-                    <p className="text-blue-600">📄 Selfie uploaded</p>
-                  )}
-                  {detailApp.bankPassbookFileId && (
-                    <p className="text-blue-600">📄 Bank Passbook uploaded</p>
-                  )}
-                  {detailApp.additionalFileIds.map((id, i) => (
-                    <p key={id || `additional-${i}`} className="text-blue-600">
-                      📄 Additional doc {i + 1} uploaded
-                    </p>
-                  ))}
-                </div>
-              </div>
+              <DocumentViewer detailApp={detailApp} actor={actor} />
               <div>
                 <label
                   htmlFor="detailStatus"
@@ -835,7 +818,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                   value={detailNotes}
                   onChange={(e) => setDetailNotes(e.target.value)}
                   rows={3}
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="Internal notes..."
                 />
               </div>
@@ -844,7 +827,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                   type="button"
                   onClick={saveDetail}
                   disabled={savingDetail}
-                  className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-green-500 text-white rounded-xl font-semibold text-sm disabled:opacity-60"
+                  className="flex-1 py-3 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-xl font-semibold text-sm disabled:opacity-60"
                 >
                   {savingDetail ? "Saving..." : "Save Changes"}
                 </button>
@@ -908,7 +891,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                     onChange={(e) =>
                       setJobForm({ ...jobForm, [key]: e.target.value })
                     }
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
               ))}
@@ -952,7 +935,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                     setJobForm({ ...jobForm, description: e.target.value })
                   }
                   rows={3}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
               <div>
@@ -969,7 +952,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                     setJobForm({ ...jobForm, requirements: e.target.value })
                   }
                   rows={3}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
               <div className="grid grid-cols-3 gap-3">
@@ -1040,7 +1023,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                 <button
                   type="button"
                   onClick={saveJob}
-                  className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-green-500 text-white rounded-xl font-semibold text-sm hover:shadow-lg transition-all"
+                  className="flex-1 py-3 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-xl font-semibold text-sm hover:shadow-lg transition-all"
                 >
                   {jobModal.editId ? "Update Position" : "Create Position"}
                 </button>
@@ -1056,6 +1039,226 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// ---- DocumentViewer Component ----
+interface DocButtonProps {
+  label: string;
+  fileId: string;
+  actor: {
+    getFile: (id: string) => Promise<BlobFileRef>;
+  } | null;
+}
+
+function DocButton({ label, fileId, actor }: DocButtonProps) {
+  const [loading, setLoading] = useState<"preview" | "download" | null>(null);
+
+  const handlePreview = async () => {
+    if (!actor || !fileId) return;
+    setLoading("preview");
+    try {
+      const ref = await actor.getFile(fileId);
+      window.open(ref.blob.getDirectURL(), "_blank", "noopener,noreferrer");
+    } catch {
+      alert("Failed to load document. Please try again.");
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const handleDownload = async () => {
+    if (!actor || !fileId) return;
+    setLoading("download");
+    try {
+      const ref = await actor.getFile(fileId);
+      const response = await fetch(ref.blob.getDirectURL());
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      const ext = ref.fileType?.split("/")[1] || "file";
+      a.download = `${label.replace(/\s+/g, "_")}.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    } catch {
+      alert("Failed to download document. Please try again.");
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-1.5 bg-white border border-gray-200 rounded-xl px-3 py-2 group hover:border-indigo-300 hover:shadow-sm transition-all">
+      <svg
+        aria-hidden="true"
+        className="w-4 h-4 text-indigo-500 flex-shrink-0"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+        />
+      </svg>
+      <span className="text-xs font-medium text-gray-700 flex-1 min-w-0 truncate">
+        {label}
+      </span>
+      <div className="flex items-center gap-0.5">
+        <button
+          type="button"
+          onClick={handlePreview}
+          disabled={loading !== null}
+          title="Preview"
+          className="w-6 h-6 rounded-lg flex items-center justify-center text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all disabled:opacity-50"
+        >
+          {loading === "preview" ? (
+            <svg
+              aria-hidden="true"
+              className="w-3.5 h-3.5 animate-spin"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              />
+            </svg>
+          ) : (
+            <svg
+              aria-hidden="true"
+              className="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+              />
+            </svg>
+          )}
+        </button>
+        <button
+          type="button"
+          onClick={handleDownload}
+          disabled={loading !== null}
+          title="Download"
+          className="w-6 h-6 rounded-lg flex items-center justify-center text-gray-400 hover:text-green-600 hover:bg-green-50 transition-all disabled:opacity-50"
+        >
+          {loading === "download" ? (
+            <svg
+              aria-hidden="true"
+              className="w-3.5 h-3.5 animate-spin"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              />
+            </svg>
+          ) : (
+            <svg
+              aria-hidden="true"
+              className="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+              />
+            </svg>
+          )}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function DocumentViewer({
+  detailApp,
+  actor,
+}: {
+  detailApp: JobApplication;
+  actor: { getFile: (id: string) => Promise<BlobFileRef> } | null;
+}) {
+  const docs: { label: string; fileId: string }[] = [
+    detailApp.resumeFileId && {
+      label: "Resume / CV",
+      fileId: detailApp.resumeFileId,
+    },
+    detailApp.aadhaarFileId && {
+      label: "Aadhaar Card",
+      fileId: detailApp.aadhaarFileId,
+    },
+    detailApp.panFileId && { label: "PAN Card", fileId: detailApp.panFileId },
+    detailApp.selfieFileId && {
+      label: "Selfie",
+      fileId: detailApp.selfieFileId,
+    },
+    detailApp.bankPassbookFileId && {
+      label: "Bank Passbook",
+      fileId: detailApp.bankPassbookFileId,
+    },
+    ...detailApp.additionalFileIds.map((id, i) =>
+      id ? { label: `Additional Doc ${i + 1}`, fileId: id } : null,
+    ),
+  ].filter(Boolean) as { label: string; fileId: string }[];
+
+  if (docs.length === 0) return null;
+
+  return (
+    <div>
+      <p className="text-gray-500 text-xs mb-2 font-medium">
+        Documents ({docs.length})
+      </p>
+      <div className="space-y-2">
+        {docs.map((doc) => (
+          <DocButton
+            key={doc.fileId}
+            label={doc.label}
+            fileId={doc.fileId}
+            actor={actor}
+          />
+        ))}
+      </div>
     </div>
   );
 }

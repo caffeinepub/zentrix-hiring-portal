@@ -112,6 +112,7 @@ export enum Variant_contract_partTime_fullTime {
 export interface backendInterface {
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     bulkUpdateStatus(trackingIds: Array<string>, status: ApplicationStatus): Promise<void>;
+    claimAdminWithPassword(password: string): Promise<boolean>;
     createJobPost(input: JobPostingInput): Promise<string>;
     deleteApplication(trackingId: string): Promise<void>;
     deleteJobPost(id: string): Promise<void>;

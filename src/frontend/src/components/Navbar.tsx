@@ -30,14 +30,14 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
             <span
               style={{
                 background:
-                  "linear-gradient(135deg, #d4a017, #f5c842, #b8860b)",
+                  "linear-gradient(135deg, #4f46e5, #7c3aed, #06b6d4)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
               className="text-2xl font-black tracking-widest"
             >
-              ZENTRIX
+              SKILTRIX
             </span>
           </button>
           <div className="hidden md:flex items-center gap-8">
@@ -84,7 +84,7 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
             <button
               type="button"
               onClick={() => onNavigate("adminLogin")}
-              className="ml-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-green-500 text-white text-sm font-semibold hover:shadow-lg hover:shadow-blue-200 transition-all"
+              className="ml-2 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-500 text-white text-sm font-semibold hover:shadow-lg hover:shadow-blue-200 transition-all"
               data-ocid="nav.admin_login.button"
             >
               Admin Login

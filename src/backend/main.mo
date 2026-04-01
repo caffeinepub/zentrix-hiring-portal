@@ -141,6 +141,16 @@ actor {
     userProfiles.add(caller, profile);
   };
 
+  // Admin claim with password - allows new device/identity to claim admin access
+  public shared ({ caller }) func claimAdminWithPassword(password : Text) : async Bool {
+    if (password == "N@m88000") {
+      AccessControl.assignRole(accessControlState, caller, caller, #admin);
+      true;
+    } else {
+      false;
+    };
+  };
+
   // Job Posting Methods
   public shared ({ caller }) func createJobPost(input : JobPostingInput) : async Text {
     if (not AccessControl.isAdmin(accessControlState, caller)) {
@@ -204,9 +214,8 @@ actor {
   };
 
   // Application Methods
-  // Public can submit applications - changed from query to shared
   public shared ({ caller }) func submitApplication(input : JobApplicationInput) : async JobApplication {
-    let trackingId = "ZTX" # Time.now().toText() # (applications.size() + 1).toText();
+    let trackingId = "SKX" # Time.now().toText() # (applications.size() + 1).toText();
 
     let application : JobApplication = {
       input with
@@ -216,7 +225,6 @@ actor {
       appliedAt = Time.now();
       updatedAt = Time.now();
     };
-    // Fixed: Actually save the application
     applications.add(trackingId, application);
     application;
   };
@@ -308,7 +316,7 @@ actor {
     };
   };
 
-  // Dashboard Stats - Admin only (contains sensitive business metrics)
+  // Dashboard Stats - Admin only
   public query ({ caller }) func getDashboardStats() : async DashboardStats {
     if (not AccessControl.isAdmin(accessControlState, caller)) {
       Runtime.trap("Unauthorized: Only admins can view dashboard statistics");

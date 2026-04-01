@@ -18,7 +18,7 @@ const faqs = [
   },
   {
     q: "How can I track my application status?",
-    a: "Use the 'Track Application' page and enter your Tracking ID (format: ZTX...) to view your current status.",
+    a: "Use the 'Track Application' page and enter your Tracking ID (format: SKX...) to view your current status.",
   },
   {
     q: "What documents are required?",
@@ -47,7 +47,7 @@ const benefits = [
     desc: "Hybrid and remote options to support work-life balance.",
     icon: "🏡",
     color: "from-blue-400 to-cyan-400",
-    bg: "bg-blue-50",
+    bg: "bg-indigo-50",
   },
   {
     title: "Learning & Growth",
@@ -82,15 +82,15 @@ const benefits = [
 const aboutCards = [
   {
     title: "Our Mission",
-    desc: "To empower businesses through cutting-edge technology solutions that drive real growth and sustainable value.",
+    desc: "To empower learners through world-class education, innovative curriculum, and technology-driven teaching experiences.",
     icon: "🎯",
-    borderColor: "border-t-blue-500",
-    iconBg: "bg-blue-100",
+    borderColor: "border-t-indigo-500",
+    iconBg: "bg-indigo-100",
     tagline: "Drive real growth",
   },
   {
     title: "Our Vision",
-    desc: "To become the most trusted technology partner for businesses of all sizes across the globe.",
+    desc: "To become the most trusted academy for skill-based learning and career transformation globally.",
     icon: "🔭",
     borderColor: "border-t-green-500",
     iconBg: "bg-green-100",
@@ -98,7 +98,7 @@ const aboutCards = [
   },
   {
     title: "Our Values",
-    desc: "Innovation, integrity, collaboration, and excellence are at the core of everything we do at Zentrix.",
+    desc: "Excellence, empathy, innovation, and inclusivity are at the core of everything we do at Skiltrix Academy.",
     icon: "💎",
     borderColor: "border-t-purple-500",
     iconBg: "bg-purple-100",
@@ -162,7 +162,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-green-600 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-indigo-700 to-cyan-600 text-white">
         <div
           className="absolute inset-0 opacity-10"
           style={{
@@ -180,21 +180,22 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               Now Hiring
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6 tracking-tight">
-              Build Your Career at
+              Build Your Future at
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-yellow-200">
-                Zentrix Solutions
+                Skiltrix Academy
               </span>
             </h1>
             <p className="text-xl text-blue-100 mb-10 leading-relaxed max-w-xl">
-              Join a team of innovators shaping the future of technology.
-              Explore exciting opportunities and grow with us.
+              Join a passionate team of educators and innovators shaping the
+              future of learning. Explore exciting opportunities and grow with
+              us.
             </p>
             <div className="flex flex-wrap gap-4">
               <button
                 type="button"
                 onClick={() => onNavigate("form")}
-                className="px-8 py-3.5 bg-white text-blue-700 font-bold rounded-full hover:shadow-2xl hover:shadow-blue-900/30 transition-all transform hover:-translate-y-0.5 text-sm"
+                className="px-8 py-3.5 bg-white text-indigo-700 font-bold rounded-full hover:shadow-2xl hover:shadow-blue-900/30 transition-all transform hover:-translate-y-0.5 text-sm"
                 data-ocid="hero.primary_button"
               >
                 Apply Now →
@@ -221,11 +222,11 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                 label: "Open Positions",
                 value: jobs.length > 0 ? jobs.length.toString() : "10+",
                 icon: "💼",
-                gradient: "from-blue-500 to-blue-600",
+                gradient: "from-indigo-500 to-indigo-600",
               },
               {
-                label: "Team Members",
-                value: "200+",
+                label: "Students Placed",
+                value: "500+",
                 icon: "👥",
                 gradient: "from-green-500 to-emerald-600",
               },
@@ -244,7 +245,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="text-center p-5 rounded-2xl bg-gradient-to-br from-gray-50 to-white border border-gray-100 hover:shadow-md hover:border-blue-100 transition-all group"
+                className="text-center p-5 rounded-2xl bg-gradient-to-br from-gray-50 to-white border border-gray-100 hover:shadow-md hover:border-indigo-100 transition-all group"
               >
                 <div className="text-2xl mb-1">{stat.icon}</div>
                 <div
@@ -265,15 +266,15 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       <section id="about" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <span className="inline-block bg-gradient-to-r from-blue-50 to-green-50 border border-blue-100 text-blue-600 text-xs font-semibold px-4 py-1.5 rounded-full mb-3">
+            <span className="inline-block bg-gradient-to-r from-indigo-50 to-cyan-50 border border-indigo-100 text-indigo-600 text-xs font-semibold px-4 py-1.5 rounded-full mb-3">
               About Us
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
               Who We Are
             </h2>
             <p className="text-gray-500 max-w-2xl mx-auto text-base">
-              A leading technology company driving digital transformation across
-              industries with innovation and integrity.
+              An edtech academy empowering learners with skill-based education
+              and career transformation.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -306,21 +307,22 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <span className="inline-block bg-gradient-to-r from-blue-50 to-green-50 border border-blue-100 text-blue-600 text-xs font-semibold px-4 py-1.5 rounded-full mb-3">
+            <span className="inline-block bg-gradient-to-r from-indigo-50 to-cyan-50 border border-indigo-100 text-indigo-600 text-xs font-semibold px-4 py-1.5 rounded-full mb-3">
               Benefits
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
-              Why Join Zentrix?
+              Why Join Skiltrix Academy?
             </h2>
             <p className="text-gray-500 max-w-xl mx-auto text-sm">
-              We invest in your growth, wellbeing, and career at every step.
+              We invest in your learning, growth, and career transformation at
+              every step.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {benefits.map((item) => (
               <div
                 key={item.title}
-                className="flex gap-4 p-6 rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group bg-white"
+                className="flex gap-4 p-6 rounded-2xl border border-gray-100 hover:border-indigo-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group bg-white"
               >
                 <div
                   className={`w-12 h-12 ${item.bg} rounded-xl flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform`}
@@ -343,7 +345,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       <section id="positions" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <span className="inline-block bg-gradient-to-r from-blue-50 to-green-50 border border-blue-100 text-blue-600 text-xs font-semibold px-4 py-1.5 rounded-full mb-3">
+            <span className="inline-block bg-gradient-to-r from-indigo-50 to-cyan-50 border border-indigo-100 text-indigo-600 text-xs font-semibold px-4 py-1.5 rounded-full mb-3">
               Careers
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">
@@ -363,8 +365,8 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                   onClick={() => setActiveFilter(d)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     activeFilter === d
-                      ? "bg-gradient-to-r from-blue-600 to-green-500 text-white shadow-md"
-                      : "bg-white text-gray-600 border border-gray-200 hover:border-blue-300"
+                      ? "bg-gradient-to-r from-indigo-600 to-cyan-500 text-white shadow-md"
+                      : "bg-white text-gray-600 border border-gray-200 hover:border-indigo-300"
                   }`}
                   data-ocid="positions.filter.tab"
                 >
@@ -388,7 +390,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               className="text-center py-20"
               data-ocid="positions.empty_state"
             >
-              <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center text-4xl mx-auto mb-4">
+              <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center text-4xl mx-auto mb-4">
                 💼
               </div>
               <h3 className="text-xl font-bold text-gray-700 mb-2">
@@ -401,7 +403,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               <button
                 type="button"
                 onClick={() => onNavigate("form")}
-                className="mt-6 px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-green-500 text-white text-sm font-semibold hover:shadow-lg transition-all"
+                className="mt-6 px-6 py-2.5 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-500 text-white text-sm font-semibold hover:shadow-lg transition-all"
               >
                 Submit Your Profile
               </button>
@@ -415,7 +417,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                   data-ocid={`positions.item.${idx + 1}`}
                 >
                   <div className="flex items-start justify-between mb-3">
-                    <span className="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                    <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">
                       {job.department}
                     </span>
                     <span
@@ -462,7 +464,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                     {job.description}
                   </p>
                   {(job.salary.min > 0n || job.salary.max > 0n) && (
-                    <div className="flex items-center gap-1 text-sm font-bold text-blue-700 mb-4 bg-blue-50 px-3 py-1.5 rounded-lg">
+                    <div className="flex items-center gap-1 text-sm font-bold text-indigo-700 mb-4 bg-indigo-50 px-3 py-1.5 rounded-lg">
                       <span>💰</span>
                       <span>
                         {job.salary.currency}{" "}
@@ -474,7 +476,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                   <button
                     type="button"
                     onClick={() => onNavigate("form", { position: job.title })}
-                    className="w-full py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-green-500 text-white text-sm font-bold hover:shadow-lg hover:shadow-blue-200 transition-all"
+                    className="w-full py-2.5 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-500 text-white text-sm font-bold hover:shadow-lg hover:shadow-indigo-200 transition-all"
                     data-ocid={`positions.item.${idx + 1}`}
                   >
                     Apply Now
@@ -490,7 +492,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       <section className="py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <span className="inline-block bg-gradient-to-r from-blue-50 to-green-50 border border-blue-100 text-blue-600 text-xs font-semibold px-4 py-1.5 rounded-full mb-3">
+            <span className="inline-block bg-gradient-to-r from-indigo-50 to-cyan-50 border border-indigo-100 text-indigo-600 text-xs font-semibold px-4 py-1.5 rounded-full mb-3">
               FAQ
             </span>
             <h2 className="text-3xl font-black text-gray-900">
@@ -501,7 +503,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             {faqs.map((faq) => (
               <div
                 key={faq.q}
-                className="border border-gray-200 rounded-2xl overflow-hidden hover:border-blue-200 transition-colors"
+                className="border border-gray-200 rounded-2xl overflow-hidden hover:border-indigo-200 transition-colors"
               >
                 <button
                   type="button"

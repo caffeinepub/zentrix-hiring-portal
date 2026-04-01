@@ -8,25 +8,25 @@ export default function Footer({ onNavigate }: FooterProps) {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-gray-900 text-gray-300">
-      <div className="h-1 bg-gradient-to-r from-blue-600 to-green-500" />
+      <div className="h-1 bg-gradient-to-r from-indigo-600 to-cyan-500" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
             <span
               style={{
                 background:
-                  "linear-gradient(135deg, #d4a017, #f5c842, #b8860b)",
+                  "linear-gradient(135deg, #4f46e5, #7c3aed, #06b6d4)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
               className="text-2xl font-black tracking-widest block mb-4"
             >
-              ZENTRIX
+              SKILTRIX
             </span>
             <p className="text-sm text-gray-400 leading-relaxed">
-              Building the future with technology and talent. Join us in
-              transforming the digital landscape.
+              Empowering learners through skill-based education and career
+              transformation.
             </p>
             <div className="flex gap-3 mt-4">
               <a
@@ -124,8 +124,8 @@ export default function Footer({ onNavigate }: FooterProps) {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-                <a href="tel:+917023628763" className="hover:text-white">
-                  +91 7023628763
+                <a href="tel:+919876543210" className="hover:text-white">
+                  +91 9876543210
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -144,10 +144,10 @@ export default function Footer({ onNavigate }: FooterProps) {
                   />
                 </svg>
                 <a
-                  href="mailto:zentrixsales@gmail.com"
+                  href="mailto:skiltrix@gmail.com"
                   className="hover:text-white break-all"
                 >
-                  zentrixsales@gmail.com
+                  skiltrix@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -166,17 +166,17 @@ export default function Footer({ onNavigate }: FooterProps) {
                   />
                 </svg>
                 <a
-                  href="mailto:zentrixsupport@gmail.com"
+                  href="mailto:skiltrix.support@gmail.com"
                   className="hover:text-white break-all"
                 >
-                  zentrixsupport@gmail.com
+                  skiltrix.support@gmail.com
                 </a>
               </li>
             </ul>
           </div>
         </div>
         <div className="mt-10 pt-6 border-t border-gray-800 text-center text-sm text-gray-500">
-          © {year} Zentrix Solutions. All rights reserved. Built with ❤️ using{" "}
+          © {year} Skiltrix Academy. All rights reserved. Built with ❤️ using{" "}
           <a
             href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
             target="_blank"

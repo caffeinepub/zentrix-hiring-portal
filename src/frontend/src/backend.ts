@@ -216,6 +216,7 @@ export interface backendInterface {
     getFile(fileId: string): Promise<BlobFileRef>;
     getJobPost(id: string): Promise<JobPosting>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
+    claimAdminWithPassword(password: string): Promise<boolean>;
     isCallerAdmin(): Promise<boolean>;
     listAllApplications(): Promise<Array<JobApplication>>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
@@ -518,6 +519,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.isCallerAdmin();
+            return result;
+        }
+    }
+    async claimAdminWithPassword(password: string): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.claimAdminWithPassword(password);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.claimAdminWithPassword(password);
             return result;
         }
     }

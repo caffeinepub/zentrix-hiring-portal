@@ -76,7 +76,7 @@ export default function SuccessPage({
             <button
               type="button"
               onClick={() => onNavigate("track", { trackingId })}
-              className="flex-1 py-3 rounded-full bg-gradient-to-r from-blue-600 to-green-500 text-white font-semibold text-sm hover:shadow-lg transition-all"
+              className="flex-1 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-semibold text-sm hover:shadow-lg transition-all"
             >
               Track Status
             </button>

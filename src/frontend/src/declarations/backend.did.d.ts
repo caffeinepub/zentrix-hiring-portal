@@ -143,6 +143,7 @@ export interface _SERVICE {
   'getFile' : ActorMethod<[string], BlobFileRef>,
   'getJobPost' : ActorMethod<[string], JobPosting>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'claimAdminWithPassword' : ActorMethod<[string], boolean>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
   'listAllApplications' : ActorMethod<[], Array<JobApplication>>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
