@@ -1,28 +1,38 @@
-# Zentrix Hiring Portal
+# Skiltrix Academy Hiring Portal
 
 ## Current State
-Full-stack React + Motoko hiring portal with Landing page, Application form, Track page, Admin login, and Admin dashboard. All data stored on ICP blockchain.
+The app is a full-stack React + Motoko hiring portal for Skiltrix Academy. The admin panel consists of:
+- `AdminLogin.tsx`: Username/password login form (usernames: `admin` or `870847`, password: `N@m88000`). Works correctly.
+- `AdminDashboard.tsx`: Two-tab layout (Applications, Manage Positions) with stats cards, application table with filters/bulk actions, job position cards, modals for detail/edit. Functional but visually basic.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Loading state for positions fetch in LandingPage
-- Better empty state for positions when loading vs truly empty
+- Sidebar navigation instead of top tabs (collapsible on mobile)
+- Dashboard overview tab with rich stats, recent applications list, quick actions
+- Better application table with avatars/initials, better status badges, row hover effects
+- Kanban-style status visualization or progress bars on stats
+- Better job position cards with more visual hierarchy
+- Toast notifications instead of alerts for save/delete confirmations
+- Better empty states with illustrations
 
 ### Modify
-- Navbar: Remove broken `<img>` tag, replace with gold gradient "ZENTRIX" text logo
-- Footer: Remove broken `<img>` tag, replace with gold gradient "ZENTRIX" text logo
-- AdminLogin: Remove broken `<img>` tag, replace with gold gradient "ZENTRIX" text logo
-- AdminDashboard header: Remove broken `<img>` tag, replace with "ZENTRIX" text logo
-- LandingPage: Improve overall UI - better hero, richer About cards, improved Why Join cards, better positions grid with skeleton loading
-- All section cards: Better visual hierarchy, improved spacing, clearer CTAs
+- Replace basic tab buttons with a proper sidebar or top nav with icons
+- Stats cards: add icons, trend indicators, better visual hierarchy
+- Application table: improve typography, spacing, status badges as colored pills
+- Job modal and detail modal: better layout, improved form fields
+- Overall color scheme: stay with indigo/violet/cyan Skiltrix palette
+- Loading states: skeleton loaders instead of spinner
 
 ### Remove
-- All `<img src="/assets/uploads/IMG-20260314-WA0060-3-1.jpg">` tags from all components
+- Basic flat tab buttons
+- Plain `alert()` calls -- replace with inline error messages or toast
 
 ## Implementation Plan
-1. Fix Navbar.tsx - remove img, add ZENTRIX text logo with gold gradient
-2. Fix Footer.tsx - remove img, add ZENTRIX text logo with gold gradient
-3. Fix AdminLogin.tsx - remove img, add ZENTRIX text logo
-4. Fix AdminDashboard.tsx - remove img in header, add ZENTRIX text logo
-5. Improve LandingPage.tsx - add loading state, improve all section UIs
+1. Rebuild `AdminDashboard.tsx` with sidebar navigation (Dashboard overview + Applications + Positions tabs)
+2. Add overview/dashboard home view with stat cards with icons, recent applications, quick action buttons
+3. Improve applications table: colored status badges, applicant initials avatar, better row design
+4. Improve positions management: better cards with salary range display
+5. Replace alert() calls with inline error state or sonner toasts
+6. Keep all existing backend logic (claimAdminWithPassword, actor calls) intact -- only UI changes
+7. Keep AdminLogin.tsx as-is (it works correctly)

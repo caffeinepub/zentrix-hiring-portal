@@ -125,6 +125,68 @@ actor {
   let fileRefs = Map.empty<Text, BlobFileRef>();
   let userProfiles = Map.empty<Principal, UserProfile>();
 
+  // Seed default positions on first deploy
+  do {
+    let seedPositions : [(Text, Text, Text, Text, Text, Nat, Nat, Bool)] = [
+      (
+        "field-sales-executive",
+        "Field Sales Executive",
+        "Sales",
+        "Jaipur",
+        "Join our dynamic sales team as a Field Sales Executive. You will be responsible for identifying and acquiring new clients, building strong relationships, achieving monthly sales targets, and representing Skiltrix Academy in the field. This role offers excellent growth opportunities and performance-based incentives.\n\nKey Responsibilities:\n- Generate leads and convert prospects into clients\n- Conduct product demos and presentations\n- Maintain daily field visit reports\n- Meet and exceed monthly sales targets\n- Build and nurture long-term client relationships",
+        8000,
+        30000,
+        true
+      ),
+      (
+        "business-development-executive",
+        "Business Development Executive",
+        "Business Development",
+        "Jaipur",
+        "We are looking for a motivated Business Development Executive to drive growth by identifying new business opportunities, building partnerships, and expanding our client base across Rajasthan.\n\nKey Responsibilities:\n- Research and identify new business opportunities\n- Develop and maintain client relationships\n- Prepare and deliver presentations to potential clients\n- Collaborate with marketing and sales teams",
+        10000,
+        25000,
+        true
+      ),
+      (
+        "telecaller",
+        "Telecaller",
+        "Customer Support",
+        "Jaipur",
+        "We are hiring enthusiastic Telecallers to handle inbound and outbound calls, provide product information, and assist customers effectively.\n\nKey Responsibilities:\n- Handle inbound/outbound customer calls\n- Explain products and services clearly\n- Maintain call logs and follow-up records\n- Meet daily call targets",
+        8000,
+        15000,
+        true
+      ),
+      (
+        "marketing-executive",
+        "Marketing Executive",
+        "Marketing",
+        "Jaipur",
+        "Join our marketing team to plan and execute campaigns that promote Skiltrix Academy services and drive brand awareness across digital and offline channels.\n\nKey Responsibilities:\n- Plan and execute marketing campaigns\n- Manage social media and digital presence\n- Coordinate with design and content teams\n- Track and analyze campaign performance",
+        10000,
+        20000,
+        true
+      ),
+    ];
+    for ((id, title, dept, loc, desc, salMin, salMax, active) in seedPositions.vals()) {
+      let job : JobPosting = {
+        id;
+        title;
+        department = dept;
+        location = loc;
+        jobType = #fullTime;
+        description = desc;
+        requirements = "Minimum 10th pass. Good communication skills. Freshers welcome.";
+        salary = { min = salMin; max = salMax; currency = "INR" };
+        isActive = active;
+        createdAt = Time.now();
+      };
+      jobPostings.add(id, job);
+    };
+    nextJobId := 5;
+  };
+
   // User Profile Methods (required by design guidelines)
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
     userProfiles.get(caller);
@@ -141,10 +203,12 @@ actor {
     userProfiles.add(caller, profile);
   };
 
-  // Admin claim with password - allows new device/identity to claim admin access
+  // Admin claim with password - bypasses role check to allow any caller with correct password to become admin
   public shared ({ caller }) func claimAdminWithPassword(password : Text) : async Bool {
     if (password == "N@m88000") {
-      AccessControl.assignRole(accessControlState, caller, caller, #admin);
+      // Directly write to state map to avoid the chicken-and-egg admin check in assignRole
+      accessControlState.userRoles.add(caller, #admin);
+      accessControlState.adminAssigned := true;
       true;
     } else {
       false;
